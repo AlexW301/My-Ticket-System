@@ -1,8 +1,12 @@
 // import {sign} from "jsonwebtoken"
+// var Cookies = require('cookies')
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
+var cookieParser = require('cookie-parser')
 
 
 export default async function handler(req, res) {
     const {username, password} = JSON.parse(req.body)
+
     console.log(username)
       const loginInfo = {
       identifier: username,
