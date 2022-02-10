@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const Login = () => {
+const Register = () => {
 
     const router = useRouter()
 
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -27,8 +28,9 @@ const Login = () => {
       }
     return (
         <div style={{flexDirection: 'column'}}>
-            <p>Login</p>
+            <p>Register</p>
             <form onSubmit={login} style={{flexDirection: 'column'}}>
+                <input type={'text'} placeholder={'Name'} value={name} onChange={(e) => {setName(e.target.value)}} />
                 <input type={'text'} placeholder={'Email'} value={email} onChange={(e) => {setEmail(e.target.value)}} />
                 <input type={'text'} placeholder={'Password'} value={password} onChange={(e) => {setPassword(e.target.value)}} />
                 <input type="submit" />
@@ -38,4 +40,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Register;
