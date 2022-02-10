@@ -2,15 +2,18 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 export default function Home({ nameCookie, emailCookie }) {
+  const router = useRouter()
 
   const logout = async () => {
     console.log('log out')
     const res = await fetch('/api/auth/logout')
-    const data = await res.json()
-    console.log(data)
+    console.log(res)
+    router.reload()
+ 
   }
   return (
     <div className={styles.container}>
