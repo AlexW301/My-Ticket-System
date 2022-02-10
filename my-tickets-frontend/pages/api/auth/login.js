@@ -24,16 +24,34 @@ export default async function handler(req, res) {
     body: JSON.stringify(loginInfo),
   });
 
-  const loginResponse = await login.json();
+  // Response to client if successful login
+  if (login.status === 200) {
+    const loginResponse = await login.json();
+    // Sets the browsers http only cookie to the jwt recieved from strapi
+    setCookie({ res }, "jwt", loginResponse.jwt, {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 72576000,
+      httpOnly: true,
+      path: "/",
+    });
 
-  // Sets the browsers http only cookie to the jwt recieved from strapi
-  setCookie({ res }, "jwt", loginResponse.jwt, {
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 72576000,
-    httpOnly: true,
-    path: "/",
-  });
+    // Also Set name and Email in Cookies
+    setCookie({ res }, "name", loginResponse.user.username, {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 72576000,
+      httpOnly: true,
+      path: "/",
+    });
 
-  // Response to client
-  res.status(200).json({ message: "success" });
+    setCookie({ res }, "email", loginResponse.user.email, {
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 72576000,
+        httpOnly: true,
+        path: "/",
+      });
+
+    res.status(200).json(loginResponse);
+  } else {
+    res.status(400).json({ error: "Wrong Log in Information" });
+  }
 }
