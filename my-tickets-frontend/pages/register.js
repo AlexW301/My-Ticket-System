@@ -14,16 +14,16 @@ const Register = () => {
     //Calls next api route to login
     const login = async (e) => {
         e.preventDefault()
-        const signin = await fetch('/api/auth/login', {
+        const register = await fetch('/api/auth/register', {
           method: 'POST',
-          body: JSON.stringify({username: email, password: password})
+          body: JSON.stringify({username: name, password: password, email: email})
         })
-        if(signin.status === 200) {
-            const data = await signin.json()
-            console.log(signin)
-            router.push('/')
+        if(register.status === 200) {
+            const data = await register.json()
+            console.log(register)
+            router.push('/login')
         } else {
-            console.log('Error Signing in, try different password')
+            console.log('You have failed to registered!')
         }
       }
     return (
@@ -35,7 +35,6 @@ const Register = () => {
                 <input type={'text'} placeholder={'Password'} value={password} onChange={(e) => {setPassword(e.target.value)}} />
                 <input type="submit" />
             </form>
-            <Link href={'/register'}>Register</Link>
         </div>
     )
 }
