@@ -1730,7 +1730,7 @@
   dependencies:
     "@strapi/utils" "4.0.7"
 
-"@strapi/strapi@4.0.7":
+"@strapi/strapi@^4.0.7":
   "integrity" "sha512-cKA9m/SncqzLIVZYghh18ba8D4+rMbLqDnzqHOj+fflYQ5ewlbVi0p+y1MfRvDpDawgmMXUujd8jLmW9p9nuqw=="
   "resolved" "https://registry.npmjs.org/@strapi/strapi/-/strapi-4.0.7.tgz"
   "version" "4.0.7"
@@ -9930,7 +9930,7 @@
     "reportback" "^2.0.2"
     "strapi-utils" "3.6.8"
 
-"strapi-utils@3.6.8":
+"strapi-utils@^3.6.8", "strapi-utils@3.6.8":
   "integrity" "sha512-6tKHfkjrY3AfSv8sAg77Ix7meMttyd2efODY2dOKkKgdXDugdNwbl/AavjWL0xfywZaCNhxkNLLN/2Wvx8pO+w=="
   "resolved" "https://registry.npmjs.org/strapi-utils/-/strapi-utils-3.6.8.tgz"
   "version" "3.6.8"

@@ -4,29 +4,41 @@ import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { useState } from "react";
 
 export default function Home({ nameCookie, emailCookie }) {
-  const router = useRouter()
+  const router = useRouter();
+
+  const [problem, setProblem] = useState("");
+  const [description, setDescription] = useState("");
 
   const logout = async () => {
-    console.log('log out')
-    const res = await fetch('/api/auth/logout')
-    console.log(res)
-    router.reload()
- 
-  }
+    console.log("log out");
+    const res = await fetch("/api/auth/logout");
+    console.log(res);
+    router.reload();
+  };
 
-  const getItems = async () => {
-    const res = await fetch("/api/monday/get-tickets", {
+  const submitTicket = async (e) => {
+    e.preventDefault()
+    const payload = {
+      data: {
+        Problem: problem,
+        Description: description,
+      },
+    };
+    const res = await fetch("/api/tickets/submit", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
+      body: JSON.stringify(payload),
     });
-    const data = await res.json()
-    console.log(data)
-  }
+    const data = await res.json();
+    console.log(data);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,23 +49,38 @@ export default function Home({ nameCookie, emailCookie }) {
       <h1>Welcome</h1>
       <p>{nameCookie}</p>
       <p>{emailCookie}</p>
-      <button onClick={getItems}>Get Items</button>
+      <form
+        onSubmit={submitTicket}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "400px",
+          gap: "10px",
+          marginBottom: "10px",
+        }}
+      >
+        <input
+          type={"text"}
+          placeholder="Problem"
+          value={problem}
+          onChange={(e) => setProblem(e.target.value)}
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input type={"submit"} />
+      </form>
       <button onClick={logout}>Logout</button>
     </div>
   );
 }
 
 export async function getServerSideProps(ctx) {
-  // const res = await fetch('http://localhost:3000/api/auth/loginstatus')
-
-  // const data = await res.json()
-
-  // console.log(data)
-
   const cookies = parseCookies(ctx);
-  const nameCookie = cookies.name
-  const emailCookie = cookies.email
-
+  const nameCookie = cookies.name;
+  const emailCookie = cookies.email;
 
   if (!cookies.jwt) {
     return {
@@ -67,7 +94,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       nameCookie,
-      emailCookie
+      emailCookie,
     },
   };
 }
