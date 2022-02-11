@@ -15,6 +15,18 @@ export default function Home({ nameCookie, emailCookie }) {
     router.reload()
  
   }
+
+  const getItems = async () => {
+    const res = await fetch("/api/monday/get-tickets", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    });
+    const data = await res.json()
+    console.log(data)
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -25,6 +37,7 @@ export default function Home({ nameCookie, emailCookie }) {
       <h1>Welcome</h1>
       <p>{nameCookie}</p>
       <p>{emailCookie}</p>
+      <button onClick={getItems}>Get Items</button>
       <button onClick={logout}>Logout</button>
     </div>
   );
