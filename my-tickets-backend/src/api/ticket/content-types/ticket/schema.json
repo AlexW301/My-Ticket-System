@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tickets",
+  "info": {
+    "singularName": "ticket",
+    "pluralName": "tickets",
+    "displayName": "Ticket"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Problem": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    }
+  }
+}
