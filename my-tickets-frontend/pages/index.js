@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useState } from "react";
 
-export default function Home({ nameCookie, emailCookie }) {
+export default function Home({ nameCookie, emailCookie, myTickets }) {
   const router = useRouter();
 
   const [problem, setProblem] = useState("");
@@ -72,6 +72,12 @@ export default function Home({ nameCookie, emailCookie }) {
         />
         <input type={"submit"} />
       </form>
+      <h2>My Tickets</h2>
+      {myTickets.map((ticket) => (
+         <div key={Math.random()} style={{padding: '1rem', backgroundColor: '#f4f4f4', width: '400px', margin: '1rem'}}>
+         <p>{ticket.attributes.Description}</p>
+       </div>
+      ))}
       <button onClick={logout}>Logout</button>
     </div>
   );
@@ -91,10 +97,20 @@ export async function getServerSideProps(ctx) {
     };
   }
 
+  const res = await fetch('http://localhost:1337/api/tickets', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${cookies.jwt}`
+    }
+  })
+
+  const data = await res.json()
+
   return {
     props: {
       nameCookie,
       emailCookie,
+      myTickets: data
     },
   };
 }
