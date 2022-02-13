@@ -75,6 +75,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
       <h2>My Tickets</h2>
       {myTickets.map((ticket) => (
          <div key={Math.random()} style={{padding: '1rem', backgroundColor: '#f4f4f4', width: '400px', margin: '1rem'}}>
+         <p>{ticket.attributes.Problem}</p>
          <p>{ticket.attributes.Description}</p>
        </div>
       ))}
