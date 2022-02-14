@@ -2,7 +2,6 @@ import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 export default async function handler(req, res) {
     const cookies = parseCookies({req});
-    console.log(cookies.jwt)
     const post = await fetch("http://localhost:1337/api/comments", {
     method: "POST",
     headers: {
