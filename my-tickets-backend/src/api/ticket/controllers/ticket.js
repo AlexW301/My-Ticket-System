@@ -13,12 +13,11 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     const content = await super.find(ctx);
 
     //Gets current users email
-    console.log(ctx.state.user.id)
-    const currentUser = ctx.state.user.id;
-    console.log(content.data[0].attributes.user.data.id)
+    const currentUser = ctx.state.user.email;
+    // console.log(content.data[0].attributes.user.data.attributes.email)
     // Filters through all results for just the current users tickets
     const usersTickets = content.data.filter(
-      (ticket) => ticket.attributes.user.id === currentUser
+      (ticket) => ticket.attributes.user.data.attributes.email === currentUser
     );
     // Returns the current users tickets
     return usersTickets;
