@@ -85,12 +85,16 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     return this.transformResponse(sanitizedEntity);
   },
 
+  // Add Comment to ticket
   async comment(ctx) {
     let entity;
+    ctx.query.populate = "user";
+    ctx.query.populate = "ticket";
+    ctx.request.body = {}
     ctx.request.body.user = ctx.state.user;
     ctx.request.body.ticket = ctx.params.id;
+    console.log(ctx)
     entity = await super.create(ctx);
-    console.log(entity)
     return entity;
   }
 }));
