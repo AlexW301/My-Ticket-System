@@ -84,6 +84,15 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     const sanitizedEntity = await this.sanitizeOutput(data, ctx);
     return this.transformResponse(sanitizedEntity);
   },
+
+  async comment(ctx) {
+    let entity;
+    ctx.request.body.user = ctx.state.user;
+    ctx.request.body.ticket = ctx.params.id;
+    entity = await super.create(ctx);
+    console.log(entity)
+    return entity;
+  }
 }));
 
 // 'use strict';
