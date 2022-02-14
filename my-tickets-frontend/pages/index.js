@@ -5,8 +5,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useState } from "react";
+import Ticket from "../components/ticket";
 
 export default function Home({ nameCookie, emailCookie, myTickets }) {
+  console.log(myTickets)
   const router = useRouter();
 
   const [problem, setProblem] = useState("");
@@ -74,10 +76,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
       </form>
       <h2>My Tickets</h2>
       {myTickets.map((ticket) => (
-         <div key={Math.random()} style={{padding: '1rem', backgroundColor: '#f4f4f4', width: '400px', margin: '1rem'}}>
-         <p>{ticket.attributes.Problem}</p>
-         <p>{ticket.attributes.Description}</p>
-       </div>
+          <Ticket ticket={ticket} key={Math.random()} />
       ))}
       <button onClick={logout}>Logout</button>
     </div>

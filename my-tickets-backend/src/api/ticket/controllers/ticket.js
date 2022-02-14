@@ -13,10 +13,12 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     const content = await super.find(ctx);
 
     //Gets current users email
-    const currentUser = ctx.state.user.email;
+    console.log(ctx.state.user.id)
+    const currentUser = ctx.state.user.id;
+    console.log(content.data[0].attributes.user.data.id)
     // Filters through all results for just the current users tickets
     const usersTickets = content.data.filter(
-      (ticket) => ticket.attributes.user.data.attributes.email === currentUser
+      (ticket) => ticket.attributes.user.id === currentUser
     );
     // Returns the current users tickets
     return usersTickets;
@@ -88,13 +90,10 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
   // Add Comment to ticket
   async comment(ctx) {
     let entity;
-    ctx.query.populate = "user";
-    ctx.query.populate = "ticket";
-    ctx.request.body = {}
     ctx.request.body.user = ctx.state.user;
     ctx.request.body.ticket = ctx.params.id;
-    console.log(ctx)
     entity = await super.create(ctx);
+    console.log(await super.create(ctx))
     return entity;
   }
 }));
