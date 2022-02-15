@@ -5,7 +5,9 @@ import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import Link from "next/link";
 // MUI
-import { Button, Card, Backdrop, TextField } from "@mui/material";
+import { Button, Typography, TextField, Paper, Container } from "@mui/material";
+import {Link as MUILink} from "@mui/material"
+// import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 
 const Login = () => {
   const router = useRouter();
@@ -31,10 +33,10 @@ const Login = () => {
 
   return (
     <Layout title={"Login"}>
-      <div className={styles.container}>
-        <Card className={styles.card}>
-          <p>Login</p>
-          <form onSubmit={login}>
+      <Container className={styles.container}>
+        <Paper className={styles.card}>
+          <Typography variant="h5">Login</Typography>
+          <form className={styles.form} onSubmit={login}>
             <TextField
               type={"text"}
               placeholder={"Email"}
@@ -44,7 +46,7 @@ const Login = () => {
               }}
             />
             <TextField
-              type={"text"}
+              type={"password"}
               placeholder={"Password"}
               value={password}
               onChange={(e) => {
@@ -52,12 +54,14 @@ const Login = () => {
               }}
             />
             <Button variant="contained" type="submit">
-              Login
+              Sign In
             </Button>
           </form>
-          <Link href={"/register"}>Register</Link>
-        </Card>
-      </div>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: "center"}}>
+          <Link href={"/register"} passHref><MUILink>Register</MUILink></Link>
+          </div>
+        </Paper>
+      </Container>
     </Layout>
   );
 };
