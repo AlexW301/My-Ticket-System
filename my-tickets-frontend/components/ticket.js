@@ -2,14 +2,14 @@ import { useState } from "react";
 
 const Ticket = ({ ticket }) => {
   const [comment, setComment] = useState("");
+
   const submitComment = async (e) => {
     e.preventDefault()
     const payload = {
       data: {
         content: comment,
-      }, 
-      ticket
-    };
+        ticket: ticket
+    }};
     const res = await fetch("/api/tickets/comment", {
       method: "POST",
       headers: {
@@ -21,6 +21,7 @@ const Ticket = ({ ticket }) => {
     const data = await res.json();
     console.log(data);
   }
+  
   return (
     <div
       style={{

@@ -12,7 +12,7 @@ module.exports = createCoreController('api::comment.comment', ({ strapi }) => ({
     async create(ctx) {
       let entity;
       ctx.request.body.data.user = ctx.state.user;
-      console.log(ctx.request)
+      console.log(ctx.state)
       entity = await super.create(ctx);
       return entity;
     },
