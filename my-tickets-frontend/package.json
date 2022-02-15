@@ -8,6 +8,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.4.1",
     "axios": "^0.25.0",
     "cookie": "^0.4.2",
     "cookie-parser": "^1.4.6",
@@ -18,6 +21,7 @@
     "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "sass": "^1.49.7",
     "scss": "^0.2.4"
   },
   "devDependencies": {
