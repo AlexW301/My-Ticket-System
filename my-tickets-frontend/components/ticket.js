@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const Ticket = ({ ticket }) => {
+  console.log(ticket.attributes)
   const [comment, setComment] = useState("");
 
   const submitComment = async (e) => {
@@ -21,7 +22,7 @@ const Ticket = ({ ticket }) => {
     const data = await res.json();
     console.log(data);
   }
-  
+
   return (
     <div
       style={{
@@ -44,6 +45,11 @@ const Ticket = ({ ticket }) => {
         />
         <input type={"submit"} />
       </form>
+      {ticket.attributes.comments.data.map((comment) => (
+        <div key={Math.random()}>
+          <p>{comment.attributes.content}</p>
+        </div>
+      ))}
     </div>
   );
 };

@@ -8,7 +8,6 @@ import { useState } from "react";
 import Ticket from "../components/ticket";
 
 export default function Home({ nameCookie, emailCookie, myTickets }) {
-  console.log(myTickets)
   const router = useRouter();
 
   const [problem, setProblem] = useState("");
@@ -97,7 +96,7 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  const res = await fetch('http://localhost:1337/api/tickets', {
+  const res = await fetch('http://localhost:1337/api/tickets?populate=*', {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${cookies.jwt}`

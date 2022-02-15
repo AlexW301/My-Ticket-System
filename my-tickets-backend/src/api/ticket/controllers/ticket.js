@@ -9,7 +9,6 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
   //Find with populate ----------------------------------------
   async find(ctx) {
     // Populates / adds the user relation field
-    ctx.query.populate = "user";
     const content = await super.find(ctx);
 
     //Gets current users email
