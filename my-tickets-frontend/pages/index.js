@@ -96,7 +96,7 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  const res = await fetch('http://localhost:1337/api/tickets?populate=*', {
+  const res = await fetch('http://localhost:1337/api/tickets?populate=user&populate=comments.user', {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${cookies.jwt}`

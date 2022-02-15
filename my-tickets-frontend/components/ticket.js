@@ -47,6 +47,7 @@ const Ticket = ({ ticket }) => {
       </form>
       {ticket.attributes.comments.data.map((comment) => (
         <div key={Math.random()}>
+          <p style={{fontSize: '12px'}}>{comment.attributes.user.data.attributes.username}</p>
           <p>{comment.attributes.content}</p>
         </div>
       ))}
