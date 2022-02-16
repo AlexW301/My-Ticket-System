@@ -35,7 +35,7 @@ const Login = () => {
     <Layout title={"Login"}>
       <Container className={styles.container}>
       <Typography variant="h4" style={{marginBottom: '1rem'}}>Welcome Back!</Typography>
-      <Typography variant="h7">Enter your credentials to access your account</Typography>
+      <Typography variant="h7">Enter your credentials to access your tickets</Typography>
         <Paper className={styles.card}>
           <Typography variant="h5">Login</Typography>
           <form className={styles.form} onSubmit={login}>
