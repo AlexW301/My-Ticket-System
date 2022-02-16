@@ -29,6 +29,15 @@
       "relation": "oneToMany",
       "target": "api::comment.comment",
       "mappedBy": "ticket"
+    },
+    "Priority": {
+      "type": "string"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
     }
   }
 }

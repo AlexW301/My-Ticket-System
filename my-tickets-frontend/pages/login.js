@@ -7,7 +7,7 @@ import Link from "next/link";
 // MUI
 import { Button, Typography, TextField, Paper, Container } from "@mui/material";
 import {Link as MUILink} from "@mui/material"
-// import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import { AddIcon } from '@mui/icons-material';
 
 const Login = () => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const Login = () => {
           <Typography variant="h5">Login</Typography>
           <form className={styles.form} onSubmit={login}>
             <TextField
-              type={"text"}
+              type={"email"}
               placeholder={"Email"}
               value={email}
               onChange={(e) => {
@@ -60,7 +60,7 @@ const Login = () => {
             </Button>
           </form>
           <div style={{display: 'flex', alignItems: 'center', justifyContent: "center"}}>
-          <Link href={"/register"} passHref><MUILink>Register</MUILink></Link>
+          <Link href={"/register"} passHref><MUILink>Dont have an account?</MUILink></Link>
           </div>
         </Paper>
       </Container>

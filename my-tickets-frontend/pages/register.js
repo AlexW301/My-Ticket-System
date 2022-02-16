@@ -38,7 +38,7 @@ const Register = () => {
             <Typography variant="h5">Sign Up</Typography>
             <form className={styles.form} onSubmit={register} style={{flexDirection: 'column'}}>
                 <TextField type={'text'} placeholder={'Name'} value={name} onChange={(e) => {setName(e.target.value)}} />
-                <TextField type={'text'} placeholder={'Email'} value={email} onChange={(e) => {setEmail(e.target.value)}} />
+                <TextField type={'email'} placeholder={'Email'} value={email} onChange={(e) => {setEmail(e.target.value)}} />
                 <TextField type={'text'} placeholder={'Password'} value={password} onChange={(e) => {setPassword(e.target.value)}} />
                 <Button type="submit" variant="contained">Sign Up</Button>
             </form>
