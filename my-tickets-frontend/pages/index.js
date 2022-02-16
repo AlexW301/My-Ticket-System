@@ -31,8 +31,8 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 //Toastify
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -90,7 +90,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         Description: description,
         Priority: priority,
         Type: type,
-        Status: 'delivered'
+        Status: "delivered",
       },
     };
     const res = await fetch("/api/tickets/submit", {
@@ -103,11 +103,11 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
     });
     const data = await res.json();
     //Clear all fields and notify user of success
-    setProblem("")
-    setDescription("")
-    setPriority("")
-    setType("Problem")
-    success()
+    setProblem("");
+    setDescription("");
+    setPriority("");
+    setType("Problem");
+    success();
   };
 
   const handleMenu = (event) => {
@@ -121,7 +121,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
   return (
     <Layout title={"Home"}>
       <Box sx={{ width: "100%" }}>
-      <ToastContainer />
+        <ToastContainer />
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static">
             <Toolbar>
@@ -183,7 +183,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         </Box>
         <TabPanel value={value} index={0}>
           <Container className={styles.container}>
-            <Typography style={{ marginBottom: "2rem" }} variant="h4">
+            <Typography style={{ marginBottom: "2rem" }} variant="h2">
               Create a new ticket
             </Typography>
             <Card className={styles.newTicket}>
@@ -207,9 +207,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
                   onChange={(e) => setProblem(e.target.value)}
                 />
                 <FormControl fullWidth>
-                  <InputLabel id="simple-select-label">
-                    Priority
-                  </InputLabel>
+                  <InputLabel id="simple-select-label">Priority</InputLabel>
                   <Select
                     labelId="simple-select-label"
                     id="simple-select"
@@ -232,7 +230,16 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                <FormControlLabel control={<Checkbox onChange={() => setType(type === 'Problem' ? 'Suggestion' : 'Problem')}/>} label="Check if this is a suggestion" />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={() =>
+                        setType(type === "Problem" ? "Suggestion" : "Problem")
+                      }
+                    />
+                  }
+                  label="Check if this is a suggestion"
+                />
                 <Button variant="contained" type={"submit"}>
                   Submit
                 </Button>
@@ -241,12 +248,20 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
           </Container>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <h2>My Tickets</h2>
-          {myTickets.map((ticket) => (
-            <Ticket ticket={ticket} key={Math.random()} />
-          ))}
-          <button onClick={handleLogout}>Logout</button>
-          <Fab color="primary" aria-label="add">
+          <Typography variant="h2" style={{marginBottom: '2rem'}}>My Tickets</Typography>
+          <div className={styles.ticketGrid}>
+            {myTickets.map((ticket) => (
+              <Ticket ticket={ticket} key={Math.random()} />
+            ))}
+          </div>
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={() => {
+              setValue(0);
+            }}
+            className={styles.addBtn}
+          >
             <AddIcon />
           </Fab>
         </TabPanel>

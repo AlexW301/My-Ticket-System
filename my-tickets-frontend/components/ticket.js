@@ -1,4 +1,14 @@
 import { useState } from "react";
+import styles from "../styles/Ticket.module.scss"
+// MUI
+import {
+  Button,
+  Typography,
+  TextField,
+  Paper,
+  Card,
+  Container
+} from "@mui/material";
 
 const Ticket = ({ ticket }) => {
   console.log(ticket.attributes)
@@ -24,17 +34,10 @@ const Ticket = ({ ticket }) => {
   }
 
   return (
-    <div
-      style={{
-        padding: "1rem",
-        backgroundColor: "#f4f4f4",
-        width: "400px",
-        margin: "1rem",
-      }}
-    >
-      <span>{ticket.id}</span>
-      <p>{ticket.attributes.Problem}</p>
-      <p>{ticket.attributes.Description}</p>
+    <Card className={styles.card}>
+      <Typography variant="h5">{ticket.attributes.Problem}</Typography>
+      <Typography>{ticket.attributes.Description}</Typography>
+      <Typography className={styles.id}>#{ticket.id}</Typography>
       <form onSubmit={submitComment}>
         <input
           type={"text"}
@@ -45,13 +48,13 @@ const Ticket = ({ ticket }) => {
         />
         <input type={"submit"} />
       </form>
-      {ticket.attributes.comments.data.map((comment) => (
+      {/* {ticket.attributes.comments.data.map((comment) => (
         <div key={Math.random()}>
           <p style={{fontSize: '12px'}}>{comment.attributes.user.data.attributes.username}</p>
           <p>{comment.attributes.content}</p>
         </div>
-      ))}
-    </div>
+      ))} */}
+    </Card>
   );
 };
 

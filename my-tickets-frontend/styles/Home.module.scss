@@ -33,3 +33,29 @@
   justify-content: center;
   align-items: center;
 }
+
+// TAB TWO // MY TICKETS
+
+.addBtn {
+  position: sticky;
+  bottom: 1vh;
+  margin-left: 94vw;
+}
+
+.ticketGrid {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 1rem;
+  column-gap: 1.2rem;
+  overflow: hidden;
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
