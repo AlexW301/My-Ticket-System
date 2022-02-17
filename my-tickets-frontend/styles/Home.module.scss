@@ -39,17 +39,18 @@
 .addBtn {
   position: sticky;
   bottom: 1vh;
-  margin-left: 94vw;
+  margin-left: 1px;
 }
 
 .ticketGrid {
   display: grid;
   align-items: center;
   justify-content: center;
+  max-width: 1400px;
+  margin: 0 auto;
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 1rem;
   column-gap: 1.2rem;
-  overflow: hidden;
 
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;

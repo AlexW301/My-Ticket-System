@@ -26,7 +26,7 @@ import {
   InputLabel,
   Select,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -59,6 +59,9 @@ function a11yProps(index) {
 
 export default function Home({ nameCookie, emailCookie, myTickets }) {
   const router = useRouter();
+
+  // Reverse the order of the array so the newest tickets show first
+  myTickets = myTickets.reverse()
 
   const [problem, setProblem] = useState("");
   const [description, setDescription] = useState("");

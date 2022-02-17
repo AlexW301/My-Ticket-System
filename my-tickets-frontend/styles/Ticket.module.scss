@@ -1,10 +1,15 @@
 .card {
     padding: 1rem;
-    width: 450px;
-    height: 200px;
-    align-self: center;
-    justify-self: center;
+    // align-self: center;
+    // justify-self: center;
     position: relative;
+    height: 150px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3.5%);
 }
 
 .id {
