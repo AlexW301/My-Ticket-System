@@ -21,12 +21,6 @@
         "files",
         "videos"
       ]
-    },
-    "ticket": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::ticket.ticket",
-      "inversedBy": "pictures"
     }
   }
 }

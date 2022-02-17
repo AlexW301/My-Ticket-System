@@ -75,32 +75,36 @@ const Ticket = ({ ticket }) => {
     refresh()
   };
 
-  // const handleFileChange = (e) => {
-  //   setImage(e.target.files[0])
-  // }
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0])
+  }
   
-  //     const handleSubmit = async (e) => {
-  //         e.preventDefault()
-  //         const formData = new FormData()
+      const handleSubmit = async (e) => {
+          e.preventDefault()
+          const formData = new FormData()
   
-  //         formData.append('files', image)
+          formData.append('files', image)
   
-  //         formData.append('ref', 'events')
-  //         formData.append('refId', evtId)
-  //         formData.append('field', 'image')
+          formData.append('ref', 'events')
+          formData.append('refId', ticket.id)
+          formData.append('field', 'image')
   
-  //         const res = await fetch(`http://localhost:1337/upload`, {
-  //             method: 'POST',
-  //             headers: {
-  //                 Authorization: `Bearer `
-  //             },
-  //             body: formData
-  //         })
-  
-  //         if(res.ok) {
-  //             imageUploaded()
-  //         }
-  //     }
+          // const res = await fetch(`http://localhost:1337/api/upload`, {
+          //     method: 'POST',
+          //     headers: {
+          //         Authorization: `Bearer 5d093becc8e99815a3e73c90917493efa1ce45dcc13a6990b73aa5ace56f8a7eb52c225badf070d53761c43f03749f4c768b20083fe2c189fb12d8fd9390c48bca70f5b027f93229d63419d6019a86a4a36442c0b6d181cf25e6e5d0d82defdde738c2953ae2d8d22944402852de801c4fc068238e64f2f94116b3ad841c08e8`
+          //     },
+          //     body: formData
+          // })
+
+          const res = await fetch(`/api/tickets/picture`, {
+            method: 'POST',
+            body: formData
+          })
+          if(res.ok) {
+              console.log('ok')
+          }
+      }
 
   return (
     <>
@@ -247,7 +251,7 @@ const Ticket = ({ ticket }) => {
               <Button type={"submit"}>Comment</Button>
             </form>
           </div>
-          {/* <div className={styles.form}>
+          <div className={styles.form}>
             <h1>Upload Image</h1>
             <form onSubmit={handleSubmit}>
                 <div className={styles.file}>
@@ -255,7 +259,7 @@ const Ticket = ({ ticket }) => {
                     <input type='submit' value='Upload' className='btn' />
                 </div>
             </form>
-        </div> */}
+        </div>
         </DialogContent>
         <ToastContainer />
       </Dialog>
