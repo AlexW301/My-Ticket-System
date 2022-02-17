@@ -48,6 +48,10 @@ const Ticket = ({ ticket }) => {
     router.reload()
   };
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const submitComment = async (e) => {
     e.preventDefault();
     const payload = {
@@ -149,7 +153,7 @@ const Ticket = ({ ticket }) => {
               }}
             >
               <Typography variant="h6">Status:</Typography>
-              <Typography variant="h7">{ticket.attributes.Status}</Typography>
+              <Typography variant="h7">{capitalizeFirstLetter(ticket.attributes.Status)}</Typography>
             </div>
             <div
               style={{
