@@ -18,3 +18,63 @@
     right: 10px;
     color: #bf1b09;
 }
+
+// Dialog Content /////
+
+.dialogContent {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    background-color: rgba(128, 128, 128, 0.048);
+
+    @media screen and (max-width: 1000px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.informationSection {
+    padding: 3rem 3rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    
+    .description {
+        word-wrap: break-word;
+        width: 400px;
+
+        @media screen and (max-width: 500px) {
+            width: 270px;
+        }
+    }
+}
+
+.commentSection {
+    // background-color: rgba(255, 0, 0, 0.267);
+    padding: 0 2rem;
+    position: relative;
+    border-radius: 10px;
+
+    .commentsGrid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .commentCard {
+        padding: .2rem .8rem;
+        background-color: #bf1b0910;
+    }
+
+    .commentMeta {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .commentSubmit {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    @media screen and (max-width: 1000px) {
+        padding: 2rem;
+    }
+}

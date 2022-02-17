@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as React from "react";
-import styles from "../styles/Ticket.module.scss"
+import styles from "../styles/Ticket.module.scss";
+import { useRouter } from 'next/router'
 // MUI
 import {
   Button,
@@ -14,16 +15,19 @@ import {
   Toolbar,
   IconButton,
   Transitions,
-  Slide
+  Slide,
+  DialogContent,
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import dateFormat, { masks } from "dateformat";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Ticket = ({ ticket }) => {
-  console.log(ticket.attributes)
+  // console.log(ticket.attributes);
+  const router = useRouter();
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -33,16 +37,21 @@ const Ticket = ({ ticket }) => {
 
   const handleClose = () => {
     setOpen(false);
-    console.log('test')
+    console.log("test");
+  };
+
+  const refresh = () => {
+    router.reload()
   };
 
   const submitComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const payload = {
       data: {
         content: comment,
-        ticket: ticket
-    }};
+        ticket: ticket,
+      },
+    };
     const res = await fetch("/api/tickets/comment", {
       method: "POST",
       headers: {
@@ -53,40 +62,42 @@ const Ticket = ({ ticket }) => {
     });
     const data = await res.json();
     console.log(data);
-  }
+  };
 
   return (
     <>
-    <Card className={styles.card} onClick={handleClickOpen}>
-      <Typography variant="h7" style={ticket.attributes.Status === 'open' ? {color: '#3cb371', fontWeight: 'bold'} : {fontWeight: 'bold'}}><span style={{color: '#000000'}}>status: </span>{ticket.attributes.Status}</Typography>
-      <Typography variant="h5" style={{marginTop: '.3rem', marginBottom: '.5rem'}}>{ticket.attributes.Problem}</Typography>
-      <Typography variant="p">{ticket.attributes.Description.length > 80 ? `${ticket.attributes.Description.slice(0, 70)}...` : ticket.attributes.Description}</Typography>
-      <Typography className={styles.id}>#{ticket.id}</Typography>
-      {/* <form onSubmit={submitComment}>
-        <TextField
-          type={"text"}
-          value={comment}
-          placeholder='Comment'
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-        />
-        <Button type={"submit"}>Comment</Button>
-      </form> */}
-      {/* {ticket.attributes.comments.data.map((comment) => (
-        <div key={Math.random()}>
-          <p style={{fontSize: '12px'}}>{comment.attributes.user.data.attributes.username}</p>
-          <p>{comment.attributes.content}</p>
-        </div>
-      ))} */}
-    </Card>
-    <Dialog
+      <Card className={styles.card} onClick={handleClickOpen}>
+        <Typography
+          variant="h7"
+          style={
+            ticket.attributes.Status === "open"
+              ? { color: "#3cb371", fontWeight: "bold" }
+              : { fontWeight: "bold" }
+          }
+        >
+          <span style={{ color: "#000000" }}>status: </span>
+          {ticket.attributes.Status}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{ marginTop: ".3rem", marginBottom: ".5rem" }}
+        >
+          {ticket.attributes.Problem}
+        </Typography>
+        <Typography variant="p">
+          {ticket.attributes.Description.length > 80
+            ? `${ticket.attributes.Description.slice(0, 70)}...`
+            : ticket.attributes.Description}
+        </Typography>
+        <Typography className={styles.id}>#{ticket.id}</Typography>
+      </Card>
+      <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative' }}>
+        <AppBar sx={{ position: "relative" }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -99,12 +110,106 @@ const Ticket = ({ ticket }) => {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {ticket.attributes.Problem}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              close
+            <Button autoFocus color="inherit" onClick={refresh}>
+              Refresh
             </Button>
           </Toolbar>
         </AppBar>
-
+        <DialogContent className={styles.dialogContent}>
+          <Paper className={styles.informationSection}>
+            <Typography
+              variant="h3"
+              style={{
+                marginBottom: "1rem",
+                fontWeight: "200",
+                fontSize: "2.5rem",
+              }}
+            >
+              {ticket.attributes.Problem}
+            </Typography>
+            <Typography variant="h6" style={{ marginBottom: "1.5rem" }}>
+              Created:{" "}
+              {dateFormat(
+                ticket.attributes.createdAt,
+                "dddd, mmmm dS, yyyy, h:MM TT"
+              )}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                gap: ".3rem",
+                alignItems: "center",
+                justifyItems: "center",
+              }}
+            >
+              <Typography variant="h6">Status:</Typography>
+              <Typography variant="h7">{ticket.attributes.Status}</Typography>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: ".3rem",
+                alignItems: "center",
+                justifyItems: "center",
+              }}
+            >
+              <Typography variant="h6">Type:</Typography>
+              <Typography variant="h7">{ticket.attributes.Type}</Typography>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: ".3rem",
+                alignItems: "center",
+                justifyItems: "center",
+              }}
+            >
+              <Typography variant="h6">Priority:</Typography>
+              <Typography variant="h7">{ticket.attributes.Priority}</Typography>
+            </div>
+            <Typography
+              variant="h5"
+              style={{ marginTop: "1rem", marginBottom: ".5rem" }}
+            >
+              Description:
+            </Typography>
+            <Typography className={styles.description}>
+              {ticket.attributes.Description}
+            </Typography>
+          </Paper>
+          <div className={styles.commentSection}>
+            <Typography style={{marginBottom: '1rem'}} variant="h2">Discussion</Typography>
+            {/* COMMENTS */}
+            <div className={styles.commentsGrid}>
+            {ticket.attributes.comments.data.map((comment) => (
+              <Card className={styles.commentCard} key={Math.random()}>
+                <div className={styles.commentMeta}>
+                <p style={{ fontSize: "12px" }}>
+                  {comment.attributes.user.data.attributes.username}
+                </p>
+                <p style={{ fontSize: "12px" }}>
+                  {dateFormat(comment.attributes.createdAt, "dddd, mmmm dS, yyyy, h:MM TT")}
+                </p>
+                </div>
+                <Typography style={{marginBottom: '.2rem'}}>{comment.attributes.content}</Typography>
+              </Card>
+            ))}
+            </div>
+            {/* SUBMIT COMMENT AREA */}
+            <form className={styles.commentSubmit} onSubmit={submitComment}>
+              <TextField
+                type={"text"}
+                value={comment}
+                placeholder="Comment"
+                style={{maxWidth: '300px', width: '300px'}}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+              <Button type={"submit"}>Comment</Button>
+            </form>
+          </div>
+        </DialogContent>
       </Dialog>
     </>
   );
