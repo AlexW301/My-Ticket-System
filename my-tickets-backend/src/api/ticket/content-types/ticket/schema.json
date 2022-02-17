@@ -38,6 +38,12 @@
     },
     "Status": {
       "type": "string"
+    },
+    "pictures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::picture.picture",
+      "mappedBy": "ticket"
     }
   }
 }
