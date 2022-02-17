@@ -60,16 +60,13 @@ function a11yProps(index) {
 export default function Home({ nameCookie, emailCookie, myTickets }) {
   const router = useRouter();
 
-  // Reverse the order of the array so the newest tickets show first
-  myTickets = myTickets.reverse()
-
   const [problem, setProblem] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
   const [type, setType] = useState("Problem");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const success = () => toast.success("Ticket Recieved!");
 
@@ -306,7 +303,7 @@ export async function getServerSideProps(ctx) {
     props: {
       nameCookie,
       emailCookie,
-      myTickets: data,
+      myTickets: data.reverse(),
     },
   };
 }

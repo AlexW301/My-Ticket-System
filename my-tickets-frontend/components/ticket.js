@@ -20,6 +20,9 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import dateFormat, { masks } from "dateformat";
+//Toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -31,13 +34,14 @@ const Ticket = ({ ticket }) => {
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
 
+  const success = () => toast.success("Comment Recieved!");
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    console.log("test");
   };
 
   const refresh = () => {
@@ -62,6 +66,8 @@ const Ticket = ({ ticket }) => {
     });
     const data = await res.json();
     console.log(data);
+    success()
+    refresh()
   };
 
   return (
@@ -210,6 +216,7 @@ const Ticket = ({ ticket }) => {
             </form>
           </div>
         </DialogContent>
+        <ToastContainer />
       </Dialog>
     </>
   );
