@@ -3,6 +3,7 @@ import * as React from "react";
 import styles from "../styles/Ticket.module.scss";
 import { useRouter } from "next/router";
 import ImageGallery from 'react-image-gallery';
+import Link from "next/link";
 // MUI
 import {
   Button,
@@ -222,7 +223,9 @@ const Ticket = ({ ticket }) => {
             </Typography>
             {ticket.attributes.Picture.data ? (
             <div className={styles.imageContainer}>
+                <Link href={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}>
                 <img className={styles.img} src={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}/>
+                </Link>
             </div>
           ) : (
             <div className={styles.form}>

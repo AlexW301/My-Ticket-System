@@ -38,8 +38,8 @@
   .img {
       width: 400px;
       height: auto;
-      border: #8a1818 2px solid;
-      border-radius: 10px;
+      border-radius: 6px;
+      cursor: pointer;
 
       @media screen and (max-width: 650px) {
           width: 300px;

@@ -183,7 +183,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         </Box>
         <TabPanel value={value} index={0}>
           <Container className={styles.container}>
-            <Typography style={{ marginBottom: "2rem" }} variant="h2">
+            <Typography style={{ marginBottom: "2rem", textAlign:'center' }} variant="h2">
               Create a new ticket
             </Typography>
             <Card className={styles.newTicket}>
