@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import * as React from "react";
 import styles from "../styles/Ticket.module.scss";
 import { useRouter } from "next/router";
-import ImageGallery from 'react-image-gallery';
+import ImageGallery from "react-image-gallery";
 import Link from "next/link";
+import ImageViewer from "react-simple-image-viewer";
 // MUI
 import {
   Button,
@@ -36,6 +37,13 @@ const Ticket = ({ ticket }) => {
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
 
   const success = () => toast.success("Comment Recieved!");
 
@@ -45,6 +53,7 @@ const Ticket = ({ ticket }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setIsViewerOpen(false);
   };
 
   const refresh = () => {
@@ -222,22 +231,48 @@ const Ticket = ({ ticket }) => {
               {ticket.attributes.Description}
             </Typography>
             {ticket.attributes.Picture.data ? (
-            <div className={styles.imageContainer}>
-                <Link href={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}>
-                <img className={styles.img} src={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}/>
-                </Link>
-            </div>
-          ) : (
-            <div className={styles.form}>
-              <form onSubmit={handleSubmit}>
-                <Typography style={{marginBottom: '1rem'}} variant="h6">Upload Image</Typography>
-                <div>
-                  <input type="file" onChange={handleFileChange}/>
-                  <Button variant="contained" type="submit" value="Upload" className="btn">Upload</Button>
-                </div>
-              </form>
-            </div>
-          )}
+              <div className={styles.imageContainer}>
+                <img
+                  src={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}
+                  onClick={() => setIsViewerOpen(true)}
+                  width="300"
+                  style={{ margin: "2px", cursor: "pointer" }}
+                  alt=""
+                />
+                {isViewerOpen && (
+                  <div>
+                    <ImageViewer
+                      src={[
+                        `http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`,
+                      ]}
+                      currentIndex={currentImage}
+                      disableScroll={false}
+                      closeOnClickOutside={true}
+                      onClose={closeImageViewer}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className={styles.form}>
+                <form onSubmit={handleSubmit}>
+                  <Typography style={{ marginBottom: "1rem" }} variant="h6">
+                    Upload Image
+                  </Typography>
+                  <div>
+                    <input type="file" onChange={handleFileChange} />
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      value="Upload"
+                      className="btn"
+                    >
+                      Upload
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            )}
           </Paper>
           <div className={styles.commentSection}>
             <Typography style={{ marginBottom: "1rem" }} variant="h2">
