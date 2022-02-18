@@ -133,7 +133,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
                 sx={{ mr: 2 }}
               ></IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                PML IT Support
+                PML Help Desk
               </Typography>
               {/* <Button variant="primary" onClick={handleLogout}>Logout</Button> */}
               <Typography style={{ marginRight: "1rem" }}>
@@ -288,7 +288,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const res = await fetch(
-    "http://localhost:1337/api/tickets?populate=user&populate=comments.user",
+    "http://localhost:1337/api/tickets?populate=user&populate=comments.user&populate=Picture",
     {
       method: "GET",
       headers: {

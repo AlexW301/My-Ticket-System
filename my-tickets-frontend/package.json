@@ -23,6 +23,8 @@
     "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-image-gallery": "^1.2.7",
+    "react-images": "^1.2.0-beta.7",
     "react-toastify": "^8.2.0",
     "sass": "^1.49.7",
     "scss": "^0.2.4"

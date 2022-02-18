@@ -1,81 +1,98 @@
 .card {
-    padding: 1rem;
-    // align-self: center;
-    // justify-self: center;
-    position: relative;
-    height: 150px;
-    cursor: pointer;
-    transition: all .2s ease-in-out;
+  padding: 1rem;
+  // align-self: center;
+  // justify-self: center;
+  position: relative;
+  height: 150px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .card:hover {
-    transform: translateY(-3.5%);
+  transform: translateY(-3.5%);
 }
 
 .id {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #bf1b09;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #bf1b09;
 }
 
 // Dialog Content /////
 
 .dialogContent {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    background-color: rgba(128, 128, 128, 0.048);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background-color: rgba(128, 128, 128, 0.048);
 
-    @media screen and (max-width: 1000px) {
-        grid-template-columns: 1fr;
-    }
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageContainer {
+  height: auto;
+  vertical-align: middle;
+
+  .img {
+      width: 400px;
+      height: auto;
+      border: #8a1818 2px solid;
+      border-radius: 10px;
+
+      @media screen and (max-width: 650px) {
+          width: 300px;
+      }
+  }
 }
 
 .informationSection {
-    padding: 3rem 3rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    
-    .description {
-        word-wrap: break-word;
-        width: 400px;
+  padding: 3rem 3rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
 
-        @media screen and (max-width: 500px) {
-            width: 270px;
-        }
+  .description {
+    word-wrap: break-word;
+    width: 400px;
+    margin-bottom: 2rem;
+
+    @media screen and (max-width: 500px) {
+      width: 270px;
     }
+  }
 }
 
 .commentSection {
-    // background-color: rgba(255, 0, 0, 0.267);
-    padding: 0 2rem;
-    position: relative;
-    border-radius: 10px;
-    width: 100%;
+  // background-color: rgba(255, 0, 0, 0.267);
+  padding: 0 2rem;
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
 
-    .commentsGrid {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .commentsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    .commentCard {
-        padding: .2rem .8rem;
-        background-color: #bf1b0910;
-    }
+  .commentCard {
+    padding: 0.2rem 0.8rem;
+    background-color: #bf1b0910;
+  }
 
-    .commentMeta {
-        display: flex;
-        justify-content: space-between;
-    }
+  .commentMeta {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    .commentSubmit {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
+  .commentSubmit {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
 
-    @media screen and (max-width: 1000px) {
-        padding: 2rem;
-    }
+  @media screen and (max-width: 1000px) {
+    padding: 2rem;
+  }
 }

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import * as React from "react";
 import styles from "../styles/Ticket.module.scss";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import ImageGallery from 'react-image-gallery';
 // MUI
 import {
   Button,
@@ -29,11 +30,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Ticket = ({ ticket }) => {
-  // console.log(ticket.attributes);
+  console.log(ticket);
   const router = useRouter();
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
 
   const success = () => toast.success("Comment Recieved!");
 
@@ -46,7 +47,7 @@ const Ticket = ({ ticket }) => {
   };
 
   const refresh = () => {
-    router.reload()
+    router.reload();
   };
 
   function capitalizeFirstLetter(string) {
@@ -71,41 +72,39 @@ const Ticket = ({ ticket }) => {
     });
     const data = await res.json();
     console.log(data);
-    success()
-    refresh()
+    success();
+    refresh();
   };
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0])
-  }
-  
-      const handleSubmit = async (e) => {
-          e.preventDefault()
-          const formData = new FormData()
-  
-          formData.append('files', image)
-  
-          // formData.append('ref', 'events')
-          // formData.append('refId', ticket.id)
-          // formData.append('field', 'image')
-  
-          // const res = await fetch(`http://localhost:1337/api/upload`, {
-          //     method: 'POST',
-          //     headers: {
-          //         Authorization: `Bearer 5d093becc8e99815a3e73c90917493efa1ce45dcc13a6990b73aa5ace56f8a7eb52c225badf070d53761c43f03749f4c768b20083fe2c189fb12d8fd9390c48bca70f5b027f93229d63419d6019a86a4a36442c0b6d181cf25e6e5d0d82defdde738c2953ae2d8d22944402852de801c4fc068238e64f2f94116b3ad841c08e8`
-          //     },
-          //     body: formData
-          // })
-          console.log(image)
-          const res = await fetch(`/api/tickets/picture`, {
-            method: 'POST',
-            body: formData
-          })
-          console.log(formData)
-          if(res.ok) {
-              console.log('ok')
-          }
-      }
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append("files", image);
+
+    formData.append("ref", "api::ticket.ticket");
+    formData.append("refId", ticket.id);
+    formData.append("field", "Picture");
+
+    const authenticate = await fetch(`/api/auth/getsession`);
+    const token = await authenticate.json();
+
+    const res = await fetch(`http://localhost:1337/api/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token.token}`,
+      },
+      body: formData,
+    });
+
+    if (res.ok) {
+      console.log("ok");
+    }
+  };
 
   return (
     <>
@@ -186,7 +185,9 @@ const Ticket = ({ ticket }) => {
               }}
             >
               <Typography variant="h6">Status:</Typography>
-              <Typography variant="h7">{capitalizeFirstLetter(ticket.attributes.Status)}</Typography>
+              <Typography variant="h7">
+                {capitalizeFirstLetter(ticket.attributes.Status)}
+              </Typography>
             </div>
             <div
               style={{
@@ -219,24 +220,46 @@ const Ticket = ({ ticket }) => {
             <Typography className={styles.description}>
               {ticket.attributes.Description}
             </Typography>
+            {ticket.attributes.Picture.data ? (
+            <div className={styles.imageContainer}>
+                <img className={styles.img} src={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}/>
+            </div>
+          ) : (
+            <div className={styles.form}>
+              <form onSubmit={handleSubmit}>
+                <Typography style={{marginBottom: '1rem'}} variant="h6">Upload Image</Typography>
+                <div>
+                  <input type="file" onChange={handleFileChange}/>
+                  <Button variant="contained" type="submit" value="Upload" className="btn">Upload</Button>
+                </div>
+              </form>
+            </div>
+          )}
           </Paper>
           <div className={styles.commentSection}>
-            <Typography style={{marginBottom: '1rem'}} variant="h2">Discussion</Typography>
+            <Typography style={{ marginBottom: "1rem" }} variant="h2">
+              Discussion
+            </Typography>
             {/* COMMENTS */}
             <div className={styles.commentsGrid}>
-            {ticket.attributes.comments.data.map((comment) => (
-              <Card className={styles.commentCard} key={Math.random()}>
-                <div className={styles.commentMeta}>
-                <p style={{ fontSize: "12px" }}>
-                  {comment.attributes.user.data.attributes.username}
-                </p>
-                <p style={{ fontSize: "12px" }}>
-                  {dateFormat(comment.attributes.createdAt, "dddd, mmmm dS, yyyy, h:MM TT")}
-                </p>
-                </div>
-                <Typography style={{marginBottom: '.2rem'}}>{comment.attributes.content}</Typography>
-              </Card>
-            ))}
+              {ticket.attributes.comments.data.map((comment) => (
+                <Card className={styles.commentCard} key={Math.random()}>
+                  <div className={styles.commentMeta}>
+                    <p style={{ fontSize: "12px" }}>
+                      {comment.attributes.user.data.attributes.username}
+                    </p>
+                    <p style={{ fontSize: "12px" }}>
+                      {dateFormat(
+                        comment.attributes.createdAt,
+                        "dddd, mmmm dS, yyyy, h:MM TT"
+                      )}
+                    </p>
+                  </div>
+                  <Typography style={{ marginBottom: ".2rem" }}>
+                    {comment.attributes.content}
+                  </Typography>
+                </Card>
+              ))}
             </div>
             {/* SUBMIT COMMENT AREA */}
             <form className={styles.commentSubmit} onSubmit={submitComment}>
@@ -244,7 +267,7 @@ const Ticket = ({ ticket }) => {
                 type={"text"}
                 value={comment}
                 placeholder="Comment"
-                style={{maxWidth: '300px', width: '300px'}}
+                style={{ maxWidth: "300px", width: "300px" }}
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}
@@ -252,15 +275,6 @@ const Ticket = ({ ticket }) => {
               <Button type={"submit"}>Comment</Button>
             </form>
           </div>
-          <div className={styles.form}>
-            <h1>Upload Image</h1>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.file}>
-                    <input type='file' onChange={handleFileChange} />
-                    <input type='submit' value='Upload' className='btn' />
-                </div>
-            </form>
-        </div>
         </DialogContent>
         <ToastContainer />
       </Dialog>

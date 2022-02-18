@@ -39,9 +39,9 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
         user: { id: ctx.state.user.id },
       },
     };
-    const events = await this.find({ query: query });
-    console.log(events);
-    if (!events.data || !events.data.length) {
+    const tickets = await this.find({ query: query });
+    console.log(tickets);
+    if (!tickets.data || !tickets.data.length) {
       return ctx.unauthorized(`You can't update this entry`);
     }
     entity = await super.update(ctx);
