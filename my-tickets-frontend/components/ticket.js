@@ -85,9 +85,9 @@ const Ticket = ({ ticket }) => {
   
           formData.append('files', image)
   
-          formData.append('ref', 'events')
-          formData.append('refId', ticket.id)
-          formData.append('field', 'image')
+          // formData.append('ref', 'events')
+          // formData.append('refId', ticket.id)
+          // formData.append('field', 'image')
   
           // const res = await fetch(`http://localhost:1337/api/upload`, {
           //     method: 'POST',
@@ -96,11 +96,12 @@ const Ticket = ({ ticket }) => {
           //     },
           //     body: formData
           // })
-
+          console.log(image)
           const res = await fetch(`/api/tickets/picture`, {
             method: 'POST',
             body: formData
           })
+          console.log(formData)
           if(res.ok) {
               console.log('ok')
           }
