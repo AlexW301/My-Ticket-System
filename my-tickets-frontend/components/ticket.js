@@ -35,7 +35,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Ticket = ({ ticket }) => {
-  console.log(ticket);
+  // console.log(ticket);
   const router = useRouter();
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
@@ -102,7 +102,7 @@ const Ticket = ({ ticket }) => {
       body: JSON.stringify(payload),
     });
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     success();
     refresh();
   };

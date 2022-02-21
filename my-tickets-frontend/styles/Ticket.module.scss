@@ -35,24 +35,9 @@
   }
 }
 
-// .imageContainer {
-//   height: auto;
-//   vertical-align: middle;
-
-//   .img {
-//       width: 400px;
-//       height: auto;
-//       border-radius: 6px;
-//       cursor: pointer;
-
-//       @media screen and (max-width: 650px) {
-//           width: 300px;
-//       }
-//   }
-// }
-
 .informationSection {
   padding: .8rem 2rem 2rem 2rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
