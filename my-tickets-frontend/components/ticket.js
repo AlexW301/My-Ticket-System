@@ -63,7 +63,7 @@ const Ticket = ({ ticket }) => {
     setCurrentImage(0);
   };
 
-  const success = () => toast.success("Comment Recieved!");
+  const success = () => toast.success("Comment Posted!");
 
   const uploadSuccess = () => toast.success("Successfully Uploaded!");
 
@@ -80,7 +80,9 @@ const Ticket = ({ ticket }) => {
   };
 
   function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    if(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
   }
 
   const submitComment = async (e) => {
@@ -213,7 +215,7 @@ const Ticket = ({ ticket }) => {
               variant="h5"
               style={{ marginTop: "1rem", marginBottom: ".5rem" }}
             >
-              Description:
+              Description
             </Typography>
             <Typography className={styles.description}>
               {ticket.attributes.Description}
