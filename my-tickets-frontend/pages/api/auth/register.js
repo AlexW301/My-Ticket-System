@@ -1,7 +1,7 @@
 // import {sign} from "jsonwebtoken"
 // var Cookies = require('cookies')
 import { parseCookies, setCookie, destroyCookie } from "nookies";
-
+import { API_URL } from "../../../config";
 export default async function handler(req, res) {
   const { username, password, email } = JSON.parse(req.body);
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   console.log(username, password, email)
-  const register = await fetch("http://localhost:1337/api/auth/local/register", {
+  const register = await fetch(`${API_URL}/api/auth/local/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",

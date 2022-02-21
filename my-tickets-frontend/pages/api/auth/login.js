@@ -1,7 +1,7 @@
 // import {sign} from "jsonwebtoken"
 // var Cookies = require('cookies')
 import { parseCookies, setCookie, destroyCookie } from "nookies";
-
+import { API_URL } from "../../../config";
 export default async function handler(req, res) {
   //Get current cookies
   const cookies = parseCookies({ req });
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   };
 
   //The "real" api call to strapi for authentication
-  const login = await fetch("http://localhost:1337/api/auth/local", {
+  const login = await fetch(`${API_URL}/api/auth/local`, {
     method: "POST",
     headers: {
       Accept: "application/json",

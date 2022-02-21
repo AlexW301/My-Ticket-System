@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { API_URL } from "../config";
 import * as React from "react";
 import styles from "../styles/AdminTicket.module.scss";
 import { useRouter } from "next/router";
@@ -58,8 +59,8 @@ const AdminTicket = ({ ticket }) => {
         const original = pic.attributes.url;
         const thumbnail = pic.attributes.formats.thumbnail.url;
         const imageObj = {
-          original: `http://localhost:1337${original}`,
-          thumbnail: `http://localhost:1337${thumbnail}`,
+          original: `${API_URL}/${original}`,
+          thumbnail: `${API_URL}/${thumbnail}`,
         };
         return imageObj;
       });
@@ -130,7 +131,7 @@ const AdminTicket = ({ ticket }) => {
     const data = await res.json();
     // console.log(data);
     success();
-    refresh();
+    router.reload();
   };
 
   const handleFileChange = (e) => {
@@ -150,7 +151,7 @@ const AdminTicket = ({ ticket }) => {
     const authenticate = await fetch(`/api/auth/getsession`);
     const token = await authenticate.json();
 
-    const res = await fetch(`http://localhost:1337/api/upload`, {
+    const res = await fetch(`${API_URL}/api/upload`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token.token}`,

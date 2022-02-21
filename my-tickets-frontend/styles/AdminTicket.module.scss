@@ -6,6 +6,10 @@
     height: 150px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+
+    @media screen and (max-width: 1000px) {
+        height: 165px;
+    }
   }
   
   .card:hover {

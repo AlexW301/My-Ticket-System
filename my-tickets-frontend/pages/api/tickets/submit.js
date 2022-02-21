@@ -1,10 +1,10 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
-
+import { API_URL } from "../../../config";
 export default async function handler(req, res) {
   const cookies = parseCookies({ req });
   console.log(req.body);
   console.log(cookies.jwt);
-  const post = await fetch("http://localhost:1337/api/tickets", {
+  const post = await fetch(`${API_URL}/api/tickets`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${cookies.jwt}`,

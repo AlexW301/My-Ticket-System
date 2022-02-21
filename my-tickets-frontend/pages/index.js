@@ -1,4 +1,5 @@
 import * as React from "react";
+import { API_URL } from "../config";
 import styles from "../styles/Home.module.scss";
 import { useRouter } from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
@@ -65,8 +66,33 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
   const [priority, setPriority] = useState("");
   const [type, setType] = useState("Problem");
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const [value, setValue] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  function handleClick(event) {
+      setCurrentPage(Number(event.target.id));
+      router.push('/#')
+  }
+
+  // Logic for displaying page numbers
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(myTickets.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const renderPageNumbers = pageNumbers.map((number) => {
+    return (
+      <li key={number} id={number} className={styles.pageNumber} onClick={handleClick}>
+        {number}
+      </li>
+    );
+  });
+
+  // Logic for displaying items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTickets = myTickets.slice(indexOfFirstItem, indexOfLastItem);
 
   const success = () => toast.success("Ticket Recieved!");
 
@@ -250,20 +276,11 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         <TabPanel value={value} index={1}>
           <Typography variant="h2" style={{marginBottom: '2rem'}}>My Tickets</Typography>
           <div className={styles.ticketGrid}>
-            {myTickets.map((ticket) => (
+            {currentTickets.map((ticket) => (
               <Ticket ticket={ticket} key={Math.random()} />
             ))}
           </div>
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              setValue(0);
-            }}
-            className={styles.addBtn}
-          >
-            <AddIcon />
-          </Fab>
+          <ul id="page-numbers" className={styles.paginationContainer}>Page Select{renderPageNumbers}</ul>
         </TabPanel>
         <TabPanel value={value} index={2}>
           Coming Soon!
@@ -283,12 +300,12 @@ export async function getServerSideProps(ctx) {
       redirect: {
         permanent: false,
         destination: "/login",
-      },
+      }
     };
   }
 
   const res = await fetch(
-    "http://localhost:1337/api/tickets?populate=user&populate=comments.user&populate=Picture",
+    `${API_URL}/api/tickets?populate=user&populate=comments.user&populate=Picture`,
     {
       method: "GET",
       headers: {

@@ -1,5 +1,5 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
-
+import { API_URL } from "../../../config";
 export default async function handler(req, res) {
   const cookies = parseCookies({ req });
   const {status, id} = req.body
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       }
   }
 
-  const post = await fetch(`http://localhost:1337/api/tickets/${id}`, {
+  const post = await fetch(`${API_URL}/api/tickets/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${cookies.jwt}`,

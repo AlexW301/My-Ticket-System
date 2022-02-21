@@ -36,12 +36,6 @@
 
 // TAB TWO // MY TICKETS
 
-.addBtn {
-  position: sticky;
-  bottom: 1px;
-  left: 93vw;
-}
-
 .ticketGrid {
   display: grid;
   align-items: center;
@@ -58,5 +52,26 @@
 
   @media screen and (max-width: 900px) {
     grid-template-columns: 1fr;
+  }
+}
+
+/// PAGINATION ////
+
+.paginationContainer {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  color: #bf1b09;
+  align-items: center;
+
+  .pageNumber {
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in;
+  }
+
+  .pageNumber:hover {
+    color: #110301;
   }
 }

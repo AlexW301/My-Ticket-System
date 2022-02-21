@@ -1,4 +1,5 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { API_URL } from "../config";
 import Layout from "../components/Layout";
 import styles from "../styles/Admin.module.scss";
 import { useState } from "react";
@@ -207,7 +208,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const res = await fetch(
-    "http://localhost:1337/api/tickets?populate=user&populate=comments.user&populate=Picture",
+    `${API_URL}/api/tickets?populate=user&populate=comments.user&populate=Picture`,
     {
       method: "GET",
       headers: {
