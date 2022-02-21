@@ -15,6 +15,9 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     const currentUser = ctx.state.user.email;
     // console.log(content.data[0].attributes.user.data.attributes.email)
     // Filters through all results for just the current users tickets
+    if (currentUser === "alex@pmlhomeloans.com") {
+      return content.data;
+    }
     const usersTickets = content.data.filter(
       (ticket) => ticket.attributes.user.data.attributes.email === currentUser
     );
@@ -32,20 +35,13 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
   // Update user event----------------------------------------
   async update(ctx) {
     let entity;
-    const { id } = ctx.params;
-    const query = {
-      filters: {
-        id: id,
-        user: { id: ctx.state.user.id },
-      },
-    };
-    const tickets = await this.find({ query: query });
-    console.log(tickets);
-    if (!tickets.data || !tickets.data.length) {
-      return ctx.unauthorized(`You can't update this entry`);
-    }
+
     entity = await super.update(ctx);
-    return entity;
+    //Gets current users email
+    const currentUser = ctx.state.user.email;
+    if(currentUser === "alex@pmlhomeloans.com") {
+      return entity;
+    }
   },
 
   // Delete a user event----------------------------------------
@@ -91,9 +87,9 @@ module.exports = createCoreController("api::ticket.ticket", ({ strapi }) => ({
     ctx.request.body.user = ctx.state.user;
     ctx.request.body.ticket = ctx.params.id;
     entity = await super.create(ctx);
-    console.log(await super.create(ctx))
+    console.log(await super.create(ctx));
     return entity;
-  }
+  },
 }));
 
 // 'use strict';

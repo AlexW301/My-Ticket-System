@@ -1,8 +1,10 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import Layout from "../components/Layout";
+import styles from "../styles/Admin.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import AdminTicket from "../components/adminTicket";
 // MUI
 import {
   Button,
@@ -63,11 +65,15 @@ function a11yProps(index) {
   };
 }
 
-const Admin = () => {
+const Admin = ({ tickets }) => {
   const router = useRouter();
 
+  const newTickets = tickets.filter((ticket) => ticket.attributes.Status === "delivered")
+  const openTickets = tickets.filter((ticket) => ticket.attributes.Status === "open")
+  const closedTickets = tickets.filter((ticket) => ticket.attributes.Status === "closed")
+
   const [anchorEl, setAnchorEl] = useState(null);
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,6 +94,7 @@ const Admin = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -101,7 +108,7 @@ const Admin = () => {
               sx={{ mr: 2 }}
             ></IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Admin
+              Admin Dashboard
             </Typography>
             {/* <Button variant="primary" onClick={handleLogout}>Logout</Button> */}
             <Typography style={{ marginRight: "1rem" }}>Admin</Typography>
@@ -148,13 +155,40 @@ const Admin = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-              new
+        <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{newTickets.length} Tickets</Typography>
+        <div className={styles.ticketGrid}>
+        {newTickets && (
+            newTickets.map((ticket) => {
+                return (
+                    <AdminTicket key={ticket.id} ticket={ticket} />
+                )
+            })
+        )}
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-          open
+      <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{openTickets.length} Tickets</Typography>
+      <div className={styles.ticketGrid}>
+        {openTickets && (
+            openTickets.map((ticket) => {
+                return (
+                    <AdminTicket key={ticket.id} ticket={ticket} />
+                )
+            })
+        )}
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-          closed
+      <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{closedTickets.length} Tickets</Typography>
+      <div className={styles.ticketGrid}>
+        {closedTickets && (
+            closedTickets.map((ticket) => {
+                return (
+                    <AdminTicket key={ticket.id} ticket={ticket} />
+                )
+            })
+        )}
+        </div>
       </TabPanel>
     </ThemeProvider>
   );
@@ -172,8 +206,22 @@ export async function getServerSideProps(ctx) {
     };
   }
 
+  const res = await fetch(
+    "http://localhost:1337/api/tickets?populate=user&populate=comments.user&populate=Picture",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${cookies.jwt}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
   return {
-    props: {},
+    props: {
+      tickets: data.reverse(),
+    },
   };
 }
 
