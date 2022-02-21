@@ -14,6 +14,10 @@
 
 .id {
   position: absolute;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
   top: 10px;
   right: 10px;
   color: #bf1b09;
@@ -25,32 +29,53 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   background-color: rgba(128, 128, 128, 0.048);
-
+  justify-content: center;
   @media screen and (max-width: 1000px) {
     grid-template-columns: 1fr;
   }
 }
 
-.imageContainer {
-  height: auto;
-  vertical-align: middle;
+// .imageContainer {
+//   height: auto;
+//   vertical-align: middle;
 
-  .img {
-      width: 400px;
-      height: auto;
-      border-radius: 6px;
-      cursor: pointer;
+//   .img {
+//       width: 400px;
+//       height: auto;
+//       border-radius: 6px;
+//       cursor: pointer;
 
-      @media screen and (max-width: 650px) {
-          width: 300px;
-      }
-  }
-}
+//       @media screen and (max-width: 650px) {
+//           width: 300px;
+//       }
+//   }
+// }
 
 .informationSection {
-  padding: 3rem 3rem 2rem 2rem;
+  padding: .8rem 2rem 2rem 2rem;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
+  width: 500px;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 400px;
+    padding: .8rem 1.5rem 2rem 1.5rem;
+  }
+
+  .pubDate {
+    font-size: .8rem;
+    text-align: right;
+    margin-bottom: .7rem;
+
+    @media screen and (max-width: 500px) {
+      font-size: .7rem;
+    }
+  }
 
   .description {
     word-wrap: break-word;
@@ -69,6 +94,11 @@
   position: relative;
   border-radius: 10px;
   width: 100%;
+
+  @media screen and (max-width: 500px) {
+    width: 400px;
+    padding: 2rem 1.5rem 2rem 1.5rem;
+  }
 
   .commentsGrid {
     display: flex;

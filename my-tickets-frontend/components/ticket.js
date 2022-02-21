@@ -4,7 +4,6 @@ import styles from "../styles/Ticket.module.scss";
 import { useRouter } from "next/router";
 import ImageGallery from "react-image-gallery";
 import Link from "next/link";
-import ImageViewer from "react-simple-image-viewer";
 // MUI
 import {
   Button,
@@ -20,8 +19,12 @@ import {
   Transitions,
   Slide,
   DialogContent,
+  Chip,
+  Stack,
+  Divider
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import dateFormat, { masks } from "dateformat";
 //Toastify
 import { ToastContainer, toast } from "react-toastify";
@@ -37,15 +40,32 @@ const Ticket = ({ ticket }) => {
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
+
+  const setPics = (ticket) => {
+    const picArray = ticket.attributes.Picture.data;
+    if(picArray) {
+      const images = picArray.map((pic) => {
+        const original = pic.attributes.url
+        const thumbnail = pic.attributes.formats.thumbnail.url
+        const imageObj = {
+          original: `http://localhost:1337${original}`,
+          thumbnail: `http://localhost:1337${thumbnail}`
+        }
+        return imageObj
+      })
+      return images
+    }
+  };
+
+  const images = setPics(ticket)
 
   const closeImageViewer = () => {
     setCurrentImage(0);
-    setIsViewerOpen(false);
   };
 
   const success = () => toast.success("Comment Recieved!");
+
+  const uploadSuccess = () => toast.success("Successfully Uploaded!");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,7 +73,6 @@ const Ticket = ({ ticket }) => {
 
   const handleClose = () => {
     setOpen(false);
-    setIsViewerOpen(false);
   };
 
   const refresh = () => {
@@ -112,28 +131,26 @@ const Ticket = ({ ticket }) => {
     });
 
     if (res.ok) {
-      console.log("ok");
+      uploadSuccess()
+      router.reload()
     }
   };
 
   return (
     <>
-      <Card className={styles.card} onClick={handleClickOpen}>
+      <Card variant="outlined" className={styles.card} onClick={handleClickOpen}>
         <Typography
           variant="h7"
-          style={
-            ticket.attributes.Status === "open"
-              ? { color: "#3cb371", fontWeight: "bold" }
-              : { fontWeight: "bold" }
-          }
+          style={{color: "#bf1b09", fontWeight: '500'}}
         >
-          <span style={{ color: "#000000" }}>status: </span>
+          <span>status: </span>
           {ticket.attributes.Status}
         </Typography>
         <Typography
           variant="h5"
           style={{ marginTop: ".3rem", marginBottom: ".5rem" }}
         >
+          <Divider style={{marginBottom: '.7rem'}}/>
           {ticket.attributes.Problem}
         </Typography>
         <Typography variant="p">
@@ -141,7 +158,7 @@ const Ticket = ({ ticket }) => {
             ? `${ticket.attributes.Description.slice(0, 70)}...`
             : ticket.attributes.Description}
         </Typography>
-        <Typography className={styles.id}>#{ticket.id}</Typography>
+        <Typography className={styles.id}><ConfirmationNumberIcon/>#{ticket.id}</Typography>
       </Card>
       <Dialog
         fullScreen
@@ -169,58 +186,29 @@ const Ticket = ({ ticket }) => {
         </AppBar>
         <DialogContent className={styles.dialogContent}>
           <Paper className={styles.informationSection}>
-            <Typography
-              variant="h3"
-              style={{
-                marginBottom: "1rem",
-                fontWeight: "200",
-                fontSize: "2.5rem",
-              }}
-            >
-              {ticket.attributes.Problem}
-            </Typography>
-            <Typography variant="h6" style={{ marginBottom: "1.5rem" }}>
+          <Typography variant="h6" className={styles.pubDate}>
               Created:{" "}
               {dateFormat(
                 ticket.attributes.createdAt,
                 "dddd, mmmm dS, yyyy, h:MM TT"
               )}
             </Typography>
-            <div
+            <Typography
+              variant="h3"
               style={{
-                display: "flex",
-                gap: ".3rem",
-                alignItems: "center",
-                justifyItems: "center",
+                marginBottom: "1.3rem",
+                fontWeight: "200",
+                fontSize: "2.5rem",
+                color: '#bf1b09'
               }}
             >
-              <Typography variant="h6">Status:</Typography>
-              <Typography variant="h7">
-                {capitalizeFirstLetter(ticket.attributes.Status)}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: ".3rem",
-                alignItems: "center",
-                justifyItems: "center",
-              }}
-            >
-              <Typography variant="h6">Type:</Typography>
-              <Typography variant="h7">{ticket.attributes.Type}</Typography>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: ".3rem",
-                alignItems: "center",
-                justifyItems: "center",
-              }}
-            >
-              <Typography variant="h6">Priority:</Typography>
-              <Typography variant="h7">{ticket.attributes.Priority}</Typography>
-            </div>
+              {ticket.attributes.Problem}
+            </Typography>
+            <Stack direction="row" spacing={1} style={{marginBottom: '1rem'}}>
+              <Chip label={`Type: ${ticket.attributes.Type}`} />
+              <Chip label={`Status: ${capitalizeFirstLetter(ticket.attributes.Status)}`} />
+              <Chip label={`Priority: ${ticket.attributes.Priority}`} />
+            </Stack>
             <Typography
               variant="h5"
               style={{ marginTop: "1rem", marginBottom: ".5rem" }}
@@ -230,52 +218,35 @@ const Ticket = ({ ticket }) => {
             <Typography className={styles.description}>
               {ticket.attributes.Description}
             </Typography>
-            {ticket.attributes.Picture.data ? (
-              <div className={styles.imageContainer}>
-                <img
-                  src={`http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`}
-                  onClick={() => setIsViewerOpen(true)}
-                  width="300"
-                  style={{ margin: "2px", cursor: "pointer" }}
-                  alt=""
-                />
-                {isViewerOpen && (
-                  <div>
-                    <ImageViewer
-                      src={[
-                        `http://localhost:1337${ticket.attributes.Picture.data.attributes.url}`,
-                      ]}
-                      currentIndex={currentImage}
-                      disableScroll={false}
-                      closeOnClickOutside={true}
-                      onClose={closeImageViewer}
-                    />
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className={styles.form}>
-                <form onSubmit={handleSubmit}>
-                  <Typography style={{ marginBottom: "1rem" }} variant="h6">
-                    Upload Image
-                  </Typography>
-                  <div>
-                    <input type="file" onChange={handleFileChange} />
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      value="Upload"
-                      className="btn"
-                    >
-                      Upload
-                    </Button>
-                  </div>
-                </form>
-              </div>
+            {images && (
+              <ImageGallery
+              showNav={false}
+              showBullets={true}
+              showThumbnails={false}
+              showPlayButton={false}
+              items={images} />
             )}
+            <div className={styles.form}>
+              <form onSubmit={handleSubmit}>
+                <Typography style={{ marginBottom: "1rem", marginTop: '1rem' }} variant="h6">
+                  Upload Image
+                </Typography>
+                <div>
+                  <input type="file" onChange={handleFileChange} />
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    value="Upload"
+                    className="btn"
+                  >
+                    Upload
+                  </Button>
+                </div>
+              </form>
+            </div>
           </Paper>
           <div className={styles.commentSection}>
-            <Typography style={{ marginBottom: "1rem" }} variant="h2">
+            <Typography style={{ marginBottom: "1.5rem" }} variant="h2">
               Discussion
             </Typography>
             {/* COMMENTS */}
