@@ -16,7 +16,6 @@ export const theme = createTheme({
   },
 });
 
-
 const Layout = ({ title, keywords, description, children }) => {
   return (
     <>
