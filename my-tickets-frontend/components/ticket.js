@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import * as React from "react";
+import { API_URL } from "../config";
 import styles from "../styles/Ticket.module.scss";
 import { useRouter } from "next/router";
 import ImageGallery from "react-image-gallery";
@@ -48,8 +49,8 @@ const Ticket = ({ ticket }) => {
         const original = pic.attributes.url
         const thumbnail = pic.attributes.formats.thumbnail.url
         const imageObj = {
-          original: `http://localhost:1337${original}`,
-          thumbnail: `http://localhost:1337${thumbnail}`
+          original: `${API_URL}${original}`,
+          thumbnail: `${API_URL}${thumbnail}`
         }
         return imageObj
       })

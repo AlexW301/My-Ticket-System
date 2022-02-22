@@ -5,15 +5,21 @@ import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import Link from "next/link";
 // MUI
-import { Button, Typography, TextField, Paper, Container } from "@mui/material";
+import { Button, Typography, TextField, Paper, Container, Checkbox, FormControlLabel } from "@mui/material";
 import {Link as MUILink} from "@mui/material"
-import { AddIcon } from '@mui/icons-material';
+
+//Toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const error = () => toast.error("Incorrect login information!");
 
   //Calls next api route to login
   const login = async (e) => {
@@ -23,17 +29,16 @@ const Login = () => {
       body: JSON.stringify({ username: email, password: password }),
     });
     if (signin.status === 200) {
-      const data = await signin.json();
-      console.log(signin);
       router.push("/");
     } else {
-      console.log("Error Signing in, try different password");
+      error()
     }
   };
 
   return (
     <Layout title={"Login"}>
       <Container className={styles.container}>
+      <ToastContainer />
       <Typography variant="h4" style={{marginBottom: '1rem'}}>Welcome Back!</Typography>
       <Typography variant="h7">Enter your credentials to access your tickets</Typography>
         <Paper className={styles.card}>
@@ -48,13 +53,14 @@ const Login = () => {
               }}
             />
             <TextField
-              type={"password"}
+              type={showPassword ? "text" : "password"}
               placeholder={"Password"}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
+            <FormControlLabel control={<Checkbox onChange={() => {setShowPassword(showPassword ? false : true)}} />} label="Show Password" />
             <Button variant="contained" type="submit">
               Sign In
             </Button>

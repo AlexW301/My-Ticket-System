@@ -59,8 +59,8 @@ const AdminTicket = ({ ticket }) => {
         const original = pic.attributes.url;
         const thumbnail = pic.attributes.formats.thumbnail.url;
         const imageObj = {
-          original: `${API_URL}/${original}`,
-          thumbnail: `${API_URL}/${thumbnail}`,
+          original: `${API_URL}${original}`,
+          thumbnail: `${API_URL}${thumbnail}`,
         };
         return imageObj;
       });

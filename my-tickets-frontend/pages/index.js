@@ -6,6 +6,7 @@ import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useState } from "react";
 import Ticket from "../components/ticket";
 import Layout from "../components/Layout";
+import Link from "next/link";
 // MUI
 import {
   Button,
@@ -14,7 +15,9 @@ import {
   Paper,
   Card,
   Container,
-  Fab,
+  Pagination,
+  Stack,
+  Divider,
   Tab,
   Tabs,
   Box,
@@ -28,6 +31,7 @@ import {
   Select,
   FormControlLabel,
   Checkbox,
+  PaginationItem,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -68,7 +72,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   function handleClick(event) {
       setCurrentPage(Number(event.target.id));
@@ -83,7 +87,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
 
   const renderPageNumbers = pageNumbers.map((number) => {
     return (
-      <li key={number} id={number} className={styles.pageNumber} onClick={handleClick}>
+      <li style={currentPage === number ? {backgroundColor: '#36363615'} : null} key={number} id={number} className={styles.pageNumber} onClick={handleClick}>
         {number}
       </li>
     );
@@ -134,6 +138,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
     setPriority("");
     setType("Problem");
     success();
+    router.reload()
   };
 
   const handleMenu = (event) => {
@@ -146,7 +151,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
 
   return (
     <Layout title={"Home"}>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", minHeight: '100vh' }}>
         <ToastContainer />
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static">
@@ -280,7 +285,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
               <Ticket ticket={ticket} key={Math.random()} />
             ))}
           </div>
-          <ul id="page-numbers" className={styles.paginationContainer}>Page Select{renderPageNumbers}</ul>
+          <ul id="page-numbers" className={styles.paginationContainer}>{renderPageNumbers}</ul>
         </TabPanel>
         <TabPanel value={value} index={2}>
           Coming Soon!

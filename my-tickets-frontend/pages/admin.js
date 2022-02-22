@@ -69,12 +69,39 @@ function a11yProps(index) {
 const Admin = ({ tickets }) => {
   const router = useRouter();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
   const newTickets = tickets.filter((ticket) => ticket.attributes.Status === "delivered")
   const openTickets = tickets.filter((ticket) => ticket.attributes.Status === "open")
   const closedTickets = tickets.filter((ticket) => ticket.attributes.Status === "closed")
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState(0);
+
+  function handleClick(event) {
+    setCurrentPage(Number(event.target.id));
+    router.push('/admin#')
+}
+
+// Logic for displaying page numbers
+const pageNumbers = [];
+for (let i = 1; i <= Math.ceil(closedTickets.length / itemsPerPage); i++) {
+  pageNumbers.push(i);
+}
+
+const renderPageNumbers = pageNumbers.map((number) => {
+  return (
+    <li style={currentPage === number ? {backgroundColor: '#36363615'} : null} key={number} id={number} className={styles.pageNumber} onClick={handleClick}>
+      {number}
+    </li>
+  );
+});
+
+// Logic for displaying items
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentClosedTickets = closedTickets.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -183,13 +210,14 @@ const Admin = ({ tickets }) => {
       <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{closedTickets.length} Tickets</Typography>
       <div className={styles.ticketGrid}>
         {closedTickets && (
-            closedTickets.map((ticket) => {
+            currentClosedTickets.map((ticket) => {
                 return (
                     <AdminTicket key={ticket.id} ticket={ticket} />
                 )
             })
         )}
         </div>
+        <ul id="page-numbers" className={styles.paginationContainer}>{renderPageNumbers}</ul>
       </TabPanel>
     </ThemeProvider>
   );

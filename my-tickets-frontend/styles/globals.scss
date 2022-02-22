@@ -8,6 +8,7 @@ body {
   background-color: #fafafa;
   min-height: 100vh;
   scroll-behavior: smooth;
+  position: relative;
 }
 
 a {
@@ -26,4 +27,31 @@ a {
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerContent {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  cursor: pointer;
+}
+
+.footerContent:hover {
+  color: #000000c4;
+}
+
+.footerText {
+  font-weight: 400;
+  font-size: .9rem;
 }

@@ -9,3 +9,28 @@
         width: 100%;
     }
 }
+
+/// PAGINATION ////
+
+.paginationContainer {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    color: #000000;
+    align-items: center;
+  
+    .pageNumber {
+      cursor: pointer;
+      padding: 0 12px;
+      border-radius: 5px;
+      line-height: 2;
+      font-size: .9rem;
+      font-weight: 400;
+      transition: all 0.2s ease-in;
+    }
+  
+    .pageNumber:hover {
+      background-color: #36363615;
+    }
+  }
