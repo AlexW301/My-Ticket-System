@@ -49,7 +49,6 @@ export default async function handler(req, res) {
         httpOnly: true,
         path: "/",
       });
-
     res.status(200).json(loginResponse);
   } else {
     res.status(400).json({ error: "Wrong Log in Information" });

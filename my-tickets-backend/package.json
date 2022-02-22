@@ -21,6 +21,7 @@
     "pg-query-stream": "^4.2.3",
     "sqlite3": "5.0.2",
     "strapi": "^3.6.8",
+    "strapi-admin": "^3.6.8",
     "strapi-utils": "^3.6.8",
     "tedious": "^14.3.0"
   },

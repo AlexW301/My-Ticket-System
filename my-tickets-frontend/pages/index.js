@@ -321,6 +321,8 @@ export async function getServerSideProps(ctx) {
 
   const data = await res.json();
 
+  console.log(res)
+
   return {
     props: {
       nameCookie,
