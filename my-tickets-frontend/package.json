@@ -31,10 +31,11 @@
     "tedious": "^14.3.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10"
   },
-  "browser":{
+  "browser": {
     "child_process": false
-    }  
+  }
 }
