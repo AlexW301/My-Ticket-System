@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media screen and (max-width: 710px) {
-    padding: 0;
-  }
 }
 
 .main {
@@ -18,6 +15,13 @@
 }
 
 // TAB ONE // CREATE A TICKET
+
+.box {
+  @media screen and (max-width: 710px) {
+    padding: 20px !important;
+    margin: 0;
+  }
+}
 
 .newTicket {
   padding: 2rem;
