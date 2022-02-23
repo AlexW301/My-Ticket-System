@@ -215,7 +215,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         <TabPanel value={value} index={0}>
           <Container className={styles.container}>
             <Typography style={{ marginBottom: "2rem", textAlign:'center' }} variant="h2">
-              Create a new ticket
+              New Ticket
             </Typography>
             <Card className={styles.newTicket}>
               <Typography variant="h6" style={{ marginBottom: "1rem" }}>
