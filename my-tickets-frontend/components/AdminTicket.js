@@ -184,7 +184,7 @@ const AdminTicket = ({ ticket }) => {
           variant="h5"
           style={{ marginTop: ".3rem", marginBottom: ".5rem" }}
         >
-          {ticket.attributes.Problem}
+          {ticket.attributes.Problem.length > 25 ? `${ticket.attributes.Problem.slice(0, 25)}..` : ticket.attributes.Problem}
         </Typography>
         <Typography variant="p">
           {ticket.attributes.Description.length > 80
