@@ -86,7 +86,7 @@ $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      color: $ig-blue;
+      color: $ig-blue !important;
       .image-gallery-svg {
         transform: scale(1.1);
       }
@@ -95,7 +95,7 @@ $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
 
   &:focus {
     // a11y support
-    outline: 2px solid $ig-blue;
+    outline: 2px solid $ig-blue !important;
   }
 }
 
@@ -327,8 +327,8 @@ $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
 
     &:focus {
       transform: scale(1.2);
-      background: $ig-blue;
-      border: 1px solid $ig-blue;
+      background: $ig-blue !important;
+      border: 1px solid $ig-blue !important;
     }
 
     &.active {
@@ -339,12 +339,12 @@ $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background: $ig-blue;
-        border: 1px solid $ig-blue;
+        background: $ig-blue !important;
+        border: 1px solid $ig-blue !important;
       }
 
       &.active:hover {
-        background: $ig-blue;
+        background: $ig-blue !important;
       }
     }
   }
@@ -454,20 +454,20 @@ $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
   &.active,
   &:focus {
     outline: none;
-    border: 4px solid $ig-blue;
+    border: 4px solid $ig-blue !important;
 
     @media (max-width: $ig-small-screen) {
-      border: 3px solid $ig-blue;
+      border: 3px solid $ig-blue !important;
     }
   }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       outline: none;
-      border: 4px solid $ig-blue;
+      border: 4px solid $ig-blue !important;
 
       @media (max-width: $ig-small-screen) {
-        border: 3px solid $ig-blue;
+        border: 3px solid $ig-blue !important;
       }
     }
   }
