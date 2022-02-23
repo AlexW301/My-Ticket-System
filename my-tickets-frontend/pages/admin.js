@@ -1,6 +1,7 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { API_URL } from "../config";
 import Layout from "../components/Layout";
+import Head from "next/head";
 import styles from "../styles/Admin.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -122,7 +123,7 @@ const Admin = ({ tickets }) => {
 
   const handleLogout = async () => {
     const res = await fetch("/api/auth/logout", {
-      method: 'POST'
+      method: "POST",
     });
     console.log(res);
     router.reload();
@@ -135,6 +136,9 @@ const Admin = ({ tickets }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>Admin</title>
+      </Head>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
