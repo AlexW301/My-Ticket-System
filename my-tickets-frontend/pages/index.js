@@ -106,9 +106,11 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
 
   const handleLogout = async () => {
     console.log("log out");
-    const res = await fetch("/api/auth/logout");
+    const res = await fetch("/api/auth/logout", {
+      method: 'POST'
+    });
     console.log(res);
-    // router.reload();
+    router.reload();
     setAnchorEl(null);
   };
 
