@@ -6,6 +6,7 @@ import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useState } from "react";
 import Ticket from "../components/ticket";
 import Layout from "../components/Layout";
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import Link from "next/link";
 // MUI
 import {
@@ -282,6 +283,11 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
         <TabPanel value={value} index={1}>
           <Typography variant="h2" style={{marginBottom: '2rem'}}>My Tickets</Typography>
           <div className={styles.ticketGrid}>
+            {currentTickets.length === 0 && (
+              <div style={{marginLeft: '30px'}}>
+                <Button variant="outlined" startIcon={<ConfirmationNumberIcon />} onClick={() => {setValue(0)}}>Create Your first ticket </Button>
+              </div>
+            )}
             {currentTickets.map((ticket) => (
               <Ticket ticket={ticket} key={Math.random()} />
             ))}
