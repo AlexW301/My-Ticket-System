@@ -60,7 +60,7 @@ $ig-small-screen: 768px !default;
 $ig-xsmall-screen: 480px !default;
 $ig-white: #fff !default;
 $ig-black: #000 !default;
-$ig-blue: #bf1b09 !default;
+$ig-blue: #bf1b09 !default !important;
 $ig-background-black: rgba(0, 0, 0, .4) !default;
 $ig-transparent: rgba(0, 0, 0, 0) !default;
 $ig-shadow: 0 2px 2px lighten($ig-black, 10%);
