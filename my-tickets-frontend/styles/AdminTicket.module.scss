@@ -3,13 +3,9 @@
     // align-self: center;
     // justify-self: center;
     position: relative;
-    height: 170px;
+    height: 180px;
     cursor: pointer;
     transition: all 0.2s ease-in-out !important;
-
-    @media screen and (max-width: 1000px) {
-        height: 165px;
-    }
   }
   
   .card:hover {
