@@ -10,11 +10,6 @@ import AdminTicket from "../components/AdminTicket.js";
 import {
   Button,
   Typography,
-  TextField,
-  Paper,
-  Card,
-  Container,
-  Fab,
   Tab,
   Tabs,
   Box,
@@ -72,36 +67,51 @@ const Admin = ({ tickets }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const newTickets = tickets.filter((ticket) => ticket.attributes.Status === "delivered")
-  const openTickets = tickets.filter((ticket) => ticket.attributes.Status === "open")
-  const closedTickets = tickets.filter((ticket) => ticket.attributes.Status === "closed")
+  const newTickets = tickets.filter(
+    (ticket) => ticket.attributes.Status === "delivered"
+  );
+  const openTickets = tickets.filter(
+    (ticket) => ticket.attributes.Status === "open"
+  );
+  const closedTickets = tickets.filter(
+    (ticket) => ticket.attributes.Status === "closed"
+  );
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState(0);
 
   function handleClick(event) {
     setCurrentPage(Number(event.target.id));
-    router.push('/admin#')
-}
+    router.push("/admin#");
+  }
 
-// Logic for displaying page numbers
-const pageNumbers = [];
-for (let i = 1; i <= Math.ceil(closedTickets.length / itemsPerPage); i++) {
-  pageNumbers.push(i);
-}
+  // Logic for displaying page numbers
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(closedTickets.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
-const renderPageNumbers = pageNumbers.map((number) => {
-  return (
-    <li style={currentPage === number ? {backgroundColor: '#36363615'} : null} key={number} id={number} className={styles.pageNumber} onClick={handleClick}>
-      {number}
-    </li>
+  const renderPageNumbers = pageNumbers.map((number) => {
+    return (
+      <li
+        style={currentPage === number ? { backgroundColor: "#36363615" } : null}
+        key={number}
+        id={number}
+        className={styles.pageNumber}
+        onClick={handleClick}
+      >
+        {number}
+      </li>
+    );
+  });
+
+  // Logic for displaying items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentClosedTickets = closedTickets.slice(
+    indexOfFirstItem,
+    indexOfLastItem
   );
-});
-
-// Logic for displaying items
-const indexOfLastItem = currentPage * itemsPerPage;
-const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-const currentClosedTickets = closedTickets.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -183,41 +193,49 @@ const currentClosedTickets = closedTickets.slice(indexOfFirstItem, indexOfLastIt
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{newTickets.length} Tickets</Typography>
+        <Typography
+          variant="h2"
+          style={{ marginBottom: "1.2rem", textAlign: "center" }}
+        >
+          {newTickets.length} Tickets
+        </Typography>
         <div className={styles.ticketGrid}>
-        {newTickets && (
+          {newTickets &&
             newTickets.map((ticket) => {
-                return (
-                    <AdminTicket key={ticket.id} ticket={ticket} />
-                )
-            })
-        )}
+              return <AdminTicket key={ticket.id} ticket={ticket} />;
+            })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{openTickets.length} Tickets</Typography>
-      <div className={styles.ticketGrid}>
-        {openTickets && (
+        <Typography
+          variant="h2"
+          style={{ marginBottom: "1.2rem", textAlign: "center" }}
+        >
+          {openTickets.length} Tickets
+        </Typography>
+        <div className={styles.ticketGrid}>
+          {openTickets &&
             openTickets.map((ticket) => {
-                return (
-                    <AdminTicket key={ticket.id} ticket={ticket} />
-                )
-            })
-        )}
+              return <AdminTicket key={ticket.id} ticket={ticket} />;
+            })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <Typography variant="h2" style={{marginBottom: '1.2rem', textAlign: 'center'}}>{closedTickets.length} Tickets</Typography>
-      <div className={styles.ticketGrid}>
-        {closedTickets && (
+        <Typography
+          variant="h2"
+          style={{ marginBottom: "1.2rem", textAlign: "center" }}
+        >
+          {closedTickets.length} Tickets
+        </Typography>
+        <div className={styles.ticketGrid}>
+          {closedTickets &&
             currentClosedTickets.map((ticket) => {
-                return (
-                    <AdminTicket key={ticket.id} ticket={ticket} />
-                )
-            })
-        )}
+              return <AdminTicket key={ticket.id} ticket={ticket} />;
+            })}
         </div>
-        <ul id="page-numbers" className={styles.paginationContainer}>{renderPageNumbers}</ul>
+        <ul id="page-numbers" className={styles.paginationContainer}>
+          {renderPageNumbers}
+        </ul>
       </TabPanel>
     </ThemeProvider>
   );
@@ -250,7 +268,7 @@ export async function getServerSideProps(ctx) {
       redirect: {
         permanent: false,
         destination: "/login",
-      }
+      },
     };
   }
 
