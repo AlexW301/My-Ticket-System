@@ -5,7 +5,7 @@ import styles from "../styles/Admin.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import AdminTicket from "../components/adminTicket";
+import AdminTicket from "../components/AdminTicket";
 // MUI
 import {
   Button,
