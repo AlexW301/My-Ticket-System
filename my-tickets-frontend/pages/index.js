@@ -284,7 +284,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
           <Typography variant="h2" style={{marginBottom: '2rem'}}>My Tickets</Typography>
           <div className={styles.ticketGrid}>
             {currentTickets.length === 0 && (
-              <div style={{marginLeft: '30px'}}>
+              <div>
                 <Button variant="outlined" startIcon={<ConfirmationNumberIcon />} onClick={() => {setValue(0)}}>Create Your first ticket </Button>
               </div>
             )}
