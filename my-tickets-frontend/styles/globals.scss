@@ -58,6 +58,21 @@ a {
 
 .image-gallery-bullets .image-gallery-bullet {
   &.active {
+    background: #fff !important;
+    border: 1px solid #fff !important;
+  }
+}
+
+.image-gallery-bullets .image-gallery-bullet {
+  &:focus {
     background: #bf1b09 !important;
+    border: 1px solid #bf1b09 !important;
+  }
+}
+
+.image-gallery-bullets .image-gallery-bullet {
+  &:hover {
+    background: #bf1b09 !important;
+    border: 1px solid #bf1b09 !important;
   }
 }
