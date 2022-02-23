@@ -22,6 +22,7 @@
     "sqlite3": "5.0.2",
     "strapi": "^3.6.8",
     "strapi-admin": "^3.6.8",
+    "strapi-plugin-config-sync": "^1.0.0-beta.8",
     "strapi-utils": "^3.6.8",
     "tedious": "^14.3.0"
   },

@@ -1,0 +1,79 @@
+{
+  "name": "Authenticated",
+  "description": "Default role given to authenticated user.",
+  "type": "authenticated",
+  "permissions": [
+    {
+      "action": "api::comment.comment.create"
+    },
+    {
+      "action": "api::comment.comment.find"
+    },
+    {
+      "action": "api::comment.comment.findOne"
+    },
+    {
+      "action": "api::ticket.ticket.comment"
+    },
+    {
+      "action": "api::ticket.ticket.create"
+    },
+    {
+      "action": "api::ticket.ticket.delete"
+    },
+    {
+      "action": "api::ticket.ticket.find"
+    },
+    {
+      "action": "api::ticket.ticket.findOne"
+    },
+    {
+      "action": "api::ticket.ticket.update"
+    },
+    {
+      "action": "plugin::upload.content-api.count"
+    },
+    {
+      "action": "plugin::upload.content-api.destroy"
+    },
+    {
+      "action": "plugin::upload.content-api.find"
+    },
+    {
+      "action": "plugin::upload.content-api.findOne"
+    },
+    {
+      "action": "plugin::upload.content-api.upload"
+    },
+    {
+      "action": "plugin::users-permissions.auth.callback"
+    },
+    {
+      "action": "plugin::users-permissions.auth.connect"
+    },
+    {
+      "action": "plugin::users-permissions.auth.register"
+    },
+    {
+      "action": "plugin::users-permissions.user.count"
+    },
+    {
+      "action": "plugin::users-permissions.user.create"
+    },
+    {
+      "action": "plugin::users-permissions.user.destroy"
+    },
+    {
+      "action": "plugin::users-permissions.user.find"
+    },
+    {
+      "action": "plugin::users-permissions.user.findOne"
+    },
+    {
+      "action": "plugin::users-permissions.user.me"
+    },
+    {
+      "action": "plugin::users-permissions.user.update"
+    }
+  ]
+}

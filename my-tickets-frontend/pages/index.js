@@ -319,7 +319,17 @@ export async function getServerSideProps(ctx) {
     }
   );
 
+  if (res.status !== 200) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      }
+    };
+  }
+
   const data = await res.json();
+
 
   console.log(res)
 

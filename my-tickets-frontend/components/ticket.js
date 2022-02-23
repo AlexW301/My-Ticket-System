@@ -125,7 +125,7 @@ const Ticket = ({ ticket }) => {
     const authenticate = await fetch(`/api/auth/getsession`);
     const token = await authenticate.json();
 
-    const res = await fetch(`http://localhost:1337/api/upload`, {
+    const res = await fetch(`${API_URL}/api/upload`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token.token}`,
