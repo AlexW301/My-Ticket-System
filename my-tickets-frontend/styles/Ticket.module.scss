@@ -3,7 +3,7 @@
   // align-self: center;
   // justify-self: center;
   position: relative;
-  height: 150px;
+  height: 170px;
   cursor: pointer;
   transition: all 0.2s ease-in-out !important;
 }
@@ -13,13 +13,10 @@
 }
 
 .id {
-  position: absolute;
   display: flex;
   gap: 4px;
   align-items: center;
   justify-content: center;
-  top: 10px;
-  right: 10px;
   color: #bf1b09;
 }
 

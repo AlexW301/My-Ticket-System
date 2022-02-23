@@ -142,16 +142,13 @@ const Ticket = ({ ticket }) => {
   return (
     <>
       <Card variant="outlined" className={styles.card} onClick={handleClickOpen}>
-        <Typography
-          variant="h7"
-          style={{color: "#bf1b09", fontWeight: '500'}}
-        >
-          <span>status: </span>
-          {ticket.attributes.Status}
-        </Typography>
+      <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
+      <Chip style={{ height: '30px'}} label={`Status: ${capitalizeFirstLetter(ticket.attributes.Status)}`} color={ticket.attributes.Status === 'open' ? 'success' : 'default'}/>
+      <Typography className={styles.id}><ConfirmationNumberIcon/>#{ticket.id}</Typography>
+      </div>
         <Typography
           variant="h5"
-          style={{ marginTop: ".3rem", marginBottom: ".5rem" }}
+          style={{ marginBottom: ".5rem" }}
         >
           <Divider style={{marginBottom: '.7rem'}}/>
           {ticket.attributes.Problem}
@@ -161,7 +158,6 @@ const Ticket = ({ ticket }) => {
             ? `${ticket.attributes.Description.slice(0, 70)}...`
             : ticket.attributes.Description}
         </Typography>
-        <Typography className={styles.id}><ConfirmationNumberIcon/>#{ticket.id}</Typography>
       </Card>
       <Dialog
         fullScreen
@@ -209,7 +205,7 @@ const Ticket = ({ ticket }) => {
             </Typography>
             <Stack direction="row" spacing={1} style={{marginBottom: '1rem'}}>
               <Chip label={`Type: ${ticket.attributes.Type}`} />
-              <Chip label={`Status: ${capitalizeFirstLetter(ticket.attributes.Status)}`} />
+              <Chip label={`Status: ${capitalizeFirstLetter(ticket.attributes.Status)}`} color={ticket.attributes.Status === 'open' ? 'success' : 'default'}/>
               <Chip label={`Priority: ${ticket.attributes.Priority}`} />
             </Stack>
             <Typography

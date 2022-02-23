@@ -172,14 +172,11 @@ const AdminTicket = ({ ticket }) => {
         className={styles.card}
         onClick={handleClickOpen}
       >
-        <Typography
-          variant="h7"
-          style={{ color: "#bf1b09", fontWeight: "500" }}
-        >
-          <span>status: </span>
-          {ticket.attributes.Status}
-        </Typography>
-        <Divider style={{ marginBottom: ".7rem" }} />
+      <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
+      <Chip style={{ height: '30px'}} label={`Status: ${capitalizeFirstLetter(ticket.attributes.Status)}`} color={ticket.attributes.Status === 'open' ? 'success' : 'default'}/>
+      <Typography className={styles.id}><ConfirmationNumberIcon/>#{ticket.id}</Typography>
+      </div>
+        <Divider style={{ marginBottom: ".7rem"}} />
         <Typography variant="h7">
           {ticket.attributes.user.data.attributes.username}
         </Typography>
@@ -193,9 +190,6 @@ const AdminTicket = ({ ticket }) => {
           {ticket.attributes.Description.length > 80
             ? `${ticket.attributes.Description.slice(0, 70)}...`
             : ticket.attributes.Description}
-        </Typography>
-        <Typography className={styles.id}>
-          <ConfirmationNumberIcon />#{ticket.id}
         </Typography>
       </Card>
       <Dialog
