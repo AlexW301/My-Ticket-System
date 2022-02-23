@@ -108,7 +108,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
     console.log("log out");
     const res = await fetch("/api/auth/logout");
     console.log(res);
-    router.reload();
+    // router.reload();
     setAnchorEl(null);
   };
 
