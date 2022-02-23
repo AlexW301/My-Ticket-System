@@ -295,7 +295,7 @@ export default function Home({ nameCookie, emailCookie, myTickets }) {
           <ul id="page-numbers" className={styles.paginationContainer}>{renderPageNumbers}</ul>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Coming Soon!
+          <Typography variant="h2" style={{fontSize: '2rem'}}>Coming Soon!</Typography>
         </TabPanel>
       </Box>
     </Layout>
