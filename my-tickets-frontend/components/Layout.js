@@ -27,7 +27,7 @@ const Layout = ({ title, keywords, description, children }) => {
         </Head>
         {children}
         <footer className={"footer"}>
-          <Link href={"mailto:alex@pmlhomeloans.com"} passHref>
+          <Link href={"https://github.com/AlexW301"} passHref>
             <div className="footerContent">
               <CodeIcon />
               <Typography variant="h6" className={"footerText"}>
