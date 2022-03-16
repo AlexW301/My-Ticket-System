@@ -280,7 +280,9 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      tickets: data.reverse(),
+      tickets: data.reverse().sort((a, b) => {
+        return b.id - a.id
+      }),
     },
   };
 }

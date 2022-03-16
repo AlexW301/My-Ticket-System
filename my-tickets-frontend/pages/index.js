@@ -64,6 +64,7 @@ function a11yProps(index) {
 }
 
 export default function Home({ nameCookie, emailCookie, myTickets }) {
+
   const router = useRouter();
 
   const [problem, setProblem] = useState("");
@@ -344,7 +345,9 @@ export async function getServerSideProps(ctx) {
     props: {
       nameCookie,
       emailCookie,
-      myTickets: data.reverse(),
+      myTickets: data.reverse().sort((a, b) => {
+        return b.id - a.id
+      }),
     },
   };
 }
