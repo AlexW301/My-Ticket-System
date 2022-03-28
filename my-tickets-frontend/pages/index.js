@@ -318,7 +318,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const res = await fetch(
-    `${API_URL}/api/tickets?populate=user&populate=comments.user&populate=Picture`,
+    `${API_URL}/api/tickets?pagination[start]=0&pagination[limit]=1000&populate=user&populate=comments.user&populate=Picture`,
     {
       method: "GET",
       headers: {
