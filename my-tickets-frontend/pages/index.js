@@ -317,7 +317,7 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  if (!cookies.email === "alex@pmlhomeloans.com") {
+  if (!cookies.email === "alex%40pmlhomeloans.com") {
     return {
       redirect: {
         permanent: false,
