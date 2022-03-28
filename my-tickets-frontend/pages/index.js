@@ -317,15 +317,6 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  if (!cookies.email === "alex%40pmlhomeloans.com") {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/admin",
-      }
-    };
-  }
-
   const res = await fetch(
     `${API_URL}/api/tickets?populate=user&populate=comments.user&populate=Picture`,
     {
